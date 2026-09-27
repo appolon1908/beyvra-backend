@@ -1,0 +1,542 @@
+{
+  "info": {
+    "name": "Beyvra Financial Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Generated from contracts/financial-service/v1/openapi.yaml. OpenAPI remains authoritative. No secrets embedded."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "bearer_token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "API",
+      "item": [
+        {
+          "name": "GET /health/live",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health/live",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health",
+                "live"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: "
+          }
+        },
+        {
+          "name": "GET /health/ready",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health/ready",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health",
+                "ready"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: "
+          }
+        },
+        {
+          "name": "GET /wallets",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/wallets",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "wallets"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: "
+          }
+        },
+        {
+          "name": "GET /wallets/{wallet_id}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/wallets/{wallet_id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "wallets",
+                "{wallet_id}"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: "
+          }
+        },
+        {
+          "name": "GET /wallets/{wallet_id}/balances",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/wallets/{wallet_id}/balances",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "wallets",
+                "{wallet_id}",
+                "balances"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: "
+          }
+        },
+        {
+          "name": "GET /deposits",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/deposits",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "deposits"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: "
+          }
+        },
+        {
+          "name": "GET /deposits/{deposit_id}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/deposits/{deposit_id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "deposits",
+                "{deposit_id}"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: "
+          }
+        },
+        {
+          "name": "GET /withdrawals",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/withdrawals",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "withdrawals"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: "
+          }
+        },
+        {
+          "name": "POST /withdrawals",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/withdrawals",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "withdrawals"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: ",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /withdrawals/preview",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/withdrawals/preview",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "withdrawals",
+                "preview"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: ",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET /withdrawals/{withdrawal_id}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/withdrawals/{withdrawal_id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "withdrawals",
+                "{withdrawal_id}"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: "
+          }
+        },
+        {
+          "name": "POST /transfers",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/transfers",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: ",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /transfers/preview",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/transfers/preview",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "transfers",
+                "preview"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: ",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET /ledger/transactions/{transaction_id}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/ledger/transactions/{transaction_id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ledger",
+                "transactions",
+                "{transaction_id}"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: "
+          }
+        },
+        {
+          "name": "POST /ledger/holds",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/ledger/holds",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ledger",
+                "holds"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: ",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /ledger/holds/{hold_id}/{action}",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/ledger/holds/{hold_id}/{action}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ledger",
+                "holds",
+                "{hold_id}",
+                "{action}"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: ",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /reconciliation/runs",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/reconciliation/runs",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reconciliation",
+                "runs"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: ",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET /reconciliation/runs/{run_id}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/reconciliation/runs/{run_id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reconciliation",
+                "runs",
+                "{run_id}"
+              ]
+            },
+            "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: "
+          }
+        }
+      ]
+    }
+  ]
+}

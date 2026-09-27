@@ -1,0 +1,356 @@
+{
+  "info": {
+    "name": "Beyvra Codestra Real Wallet",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Generated from contracts/openapi/codestra-real-wallet-v1.yaml. OpenAPI remains authoritative. No secrets embedded."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "bearer_token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "API",
+      "item": [
+        {
+          "name": "realWalletFeatures",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/features/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "features"
+              ]
+            },
+            "description": "Derived from contracts/openapi/codestra-real-wallet-v1.yaml\noperationId: realWalletFeatures"
+          }
+        },
+        {
+          "name": "listEnabledAssets",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/assets/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "assets"
+              ]
+            },
+            "description": "Derived from contracts/openapi/codestra-real-wallet-v1.yaml\noperationId: listEnabledAssets"
+          }
+        },
+        {
+          "name": "listEnabledNetworks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/networks/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "networks"
+              ]
+            },
+            "description": "Derived from contracts/openapi/codestra-real-wallet-v1.yaml\noperationId: listEnabledNetworks"
+          }
+        },
+        {
+          "name": "listEnabledAssetNetworks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/asset-networks/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "asset-networks"
+              ]
+            },
+            "description": "Derived from contracts/openapi/codestra-real-wallet-v1.yaml\noperationId: listEnabledAssetNetworks"
+          }
+        },
+        {
+          "name": "realWalletStatus",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/status/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "status"
+              ]
+            },
+            "description": "Derived from contracts/openapi/codestra-real-wallet-v1.yaml\noperationId: realWalletStatus"
+          }
+        },
+        {
+          "name": "listRealWallets",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/wallets/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "wallets"
+              ]
+            },
+            "description": "Derived from contracts/openapi/codestra-real-wallet-v1.yaml\noperationId: listRealWallets"
+          }
+        },
+        {
+          "name": "listRealWalletBalances",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/wallets/{wallet_id}/balances/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "wallets",
+                "{wallet_id}",
+                "balances"
+              ]
+            },
+            "description": "Derived from contracts/openapi/codestra-real-wallet-v1.yaml\noperationId: listRealWalletBalances"
+          }
+        },
+        {
+          "name": "listWithdrawalAddresses",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/wallets/{wallet_id}/addresses/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "wallets",
+                "{wallet_id}",
+                "addresses"
+              ]
+            },
+            "description": "Derived from contracts/openapi/codestra-real-wallet-v1.yaml\noperationId: listWithdrawalAddresses"
+          }
+        },
+        {
+          "name": "listDeposits",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/deposits/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "deposits"
+              ]
+            },
+            "description": "Derived from contracts/openapi/codestra-real-wallet-v1.yaml\noperationId: listDeposits"
+          }
+        },
+        {
+          "name": "listWithdrawals",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/withdrawals/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "withdrawals"
+              ]
+            },
+            "description": "Derived from contracts/openapi/codestra-real-wallet-v1.yaml\noperationId: listWithdrawals"
+          }
+        },
+        {
+          "name": "listRealTransfers",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/transfers/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            },
+            "description": "Derived from contracts/openapi/codestra-real-wallet-v1.yaml\noperationId: listRealTransfers"
+          }
+        },
+        {
+          "name": "listWebhookSubscriptions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/webhook-subscriptions/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "webhook-subscriptions"
+              ]
+            },
+            "description": "Derived from contracts/openapi/codestra-real-wallet-v1.yaml\noperationId: listWebhookSubscriptions"
+          }
+        },
+        {
+          "name": "createWebhookSubscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/webhook-subscriptions/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "webhook-subscriptions"
+              ]
+            },
+            "description": "Derived from contracts/openapi/codestra-real-wallet-v1.yaml\noperationId: createWebhookSubscription",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "rotateWebhookSubscriptionSecret",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/webhook-subscriptions/{subscription_id}/rotate-secret/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "webhook-subscriptions",
+                "{subscription_id}",
+                "rotate-secret"
+              ]
+            },
+            "description": "Derived from contracts/openapi/codestra-real-wallet-v1.yaml\noperationId: rotateWebhookSubscriptionSecret",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
