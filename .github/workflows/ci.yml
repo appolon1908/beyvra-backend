@@ -369,3 +369,65 @@ jobs:
           severity: CRITICAL,HIGH
           ignore-unfixed: true
           exit-code: "1"
+
+  required-control-plane:
+    name: codestra-control-plane
+    needs: [validate, container, secrets, exact-head-base-ci]
+    if: ${{ always() }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Require real backend tests and image security gates
+        shell: bash
+        env:
+          VALIDATE_RESULT: ${{ needs.validate.result }}
+          CONTAINER_RESULT: ${{ needs.container.result }}
+          SECRETS_RESULT: ${{ needs.secrets.result }}
+          EXACT_SHA_RESULT: ${{ needs['exact-head-base-ci'].result }}
+        run: |
+          set -Eeuo pipefail
+          for state in "$VALIDATE_RESULT" "$CONTAINER_RESULT" "$SECRETS_RESULT" "$EXACT_SHA_RESULT"; do
+            if [[ "$state" != "success" ]]; then
+              echo "::error::Required backend test, container, secrets or exact-SHA gate failed: $state"
+              exit 1
+            fi
+          done
+
+      - name: Check out the exact candidate for identity verification
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Require the unchanged canonical repository and release safety contract
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          COMPARISON_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+          GITHUB_REPOSITORY_ID: ${{ github.repository_id }}
+        run: |
+          set -Eeuo pipefail
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          python3 -m pip install --disable-pip-version-check --no-input PyYAML==6.0.3
+          python3 .codestra/validate-production-orchestrator-contract.py
+
+  legacy-control-plane:
+    name: codestra/control-plane
+    needs: [required-control-plane]
+    if: ${{ always() }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Require exact trusted backend control-plane result
+        shell: bash
+        env:
+          CONTROL_RESULT: ${{ needs['required-control-plane'].result }}
+        run: |
+          if [[ "$CONTROL_RESULT" != "success" ]]; then
+            echo "::error::Required backend control-plane gate ended: $CONTROL_RESULT"
+            exit 1
+          fi
+          echo "All backend CI, image security, exact-SHA, and identity contract gates passed"
