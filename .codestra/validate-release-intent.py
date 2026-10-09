@@ -58,7 +58,7 @@ CATALOG_REPOSITORIES = {
     "appolon1908-hue/Keycloak",
     "appolon1908-hue/Middleware-",
     "appolon1908-hue/codestra",
-    "appolon1908-hue/beyvra-backend",
+    "appolon1908/beyvra-backend",
     "appolon1908-hue/backend2",
     "appolon1908-hue/beyvra-frontend",
     "appolon1908-hue/scrapper",
@@ -104,7 +104,7 @@ EXPECTED_CHECK_WORKFLOWS = {
         "verify": ".github/workflows/ci.yml",
         "container": ".github/workflows/ci.yml",
     },
-    "appolon1908-hue/beyvra-backend": {
+    "appolon1908/beyvra-backend": {
         "orchestrator-contract": ".github/workflows/production-orchestrator-contract.yml",
         "container": ".github/workflows/ci.yml",
         "exact-head-base-ci": ".github/workflows/ci.yml",
