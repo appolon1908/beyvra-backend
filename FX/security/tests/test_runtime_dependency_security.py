@@ -10,7 +10,6 @@ from pathlib import Path
 
 import jwt
 
-
 REQUIREMENTS = Path(__file__).resolve().parents[2] / "requirements.txt"
 
 
