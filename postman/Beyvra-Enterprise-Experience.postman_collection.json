@@ -1,0 +1,751 @@
+{
+  "info": {
+    "name": "Beyvra Enterprise Experience",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Generated from contracts/openapi/beyvra-enterprise-experience-v1.yaml. OpenAPI remains authoritative. No secrets embedded."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "bearer_token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "API",
+      "item": [
+        {
+          "name": "listWatchlists",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/watchlists",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "watchlists"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: listWatchlists"
+          }
+        },
+        {
+          "name": "createWatchlist",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/watchlists",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "watchlists"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: createWatchlist",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "getWatchlist",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/watchlists/{watchlist_id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "watchlists",
+                "{watchlist_id}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: getWatchlist"
+          }
+        },
+        {
+          "name": "updateWatchlist",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/watchlists/{watchlist_id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "watchlists",
+                "{watchlist_id}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: updateWatchlist",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "deleteWatchlist",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/watchlists/{watchlist_id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "watchlists",
+                "{watchlist_id}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: deleteWatchlist"
+          }
+        },
+        {
+          "name": "listWatchlistItems",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/watchlists/{watchlist_id}/items",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "watchlists",
+                "{watchlist_id}",
+                "items"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: listWatchlistItems"
+          }
+        },
+        {
+          "name": "addWatchlistItem",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/watchlists/{watchlist_id}/items",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "watchlists",
+                "{watchlist_id}",
+                "items"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: addWatchlistItem",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "listPriceAlerts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/alerts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "alerts"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: listPriceAlerts"
+          }
+        },
+        {
+          "name": "createPriceAlert",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/alerts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "alerts"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: createPriceAlert",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "getPriceAlert",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/alerts/{alert_id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "alerts",
+                "{alert_id}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: getPriceAlert"
+          }
+        },
+        {
+          "name": "updatePriceAlert",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/alerts/{alert_id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "alerts",
+                "{alert_id}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: updatePriceAlert",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "deletePriceAlert",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/alerts/{alert_id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "alerts",
+                "{alert_id}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: deletePriceAlert"
+          }
+        },
+        {
+          "name": "getPortfolioSummary",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/portfolio/summary",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "portfolio",
+                "summary"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: getPortfolioSummary"
+          }
+        },
+        {
+          "name": "listPortfolioPositions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/portfolio/positions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "portfolio",
+                "positions"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: listPortfolioPositions"
+          }
+        },
+        {
+          "name": "getPortfolioPerformance",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/portfolio/performance",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "portfolio",
+                "performance"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: getPortfolioPerformance"
+          }
+        },
+        {
+          "name": "getPortfolioAllocations",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/portfolio/allocations",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "portfolio",
+                "allocations"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: getPortfolioAllocations"
+          }
+        },
+        {
+          "name": "getPortfolioRisk",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/portfolio/risk",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "portfolio",
+                "risk"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: getPortfolioRisk"
+          }
+        },
+        {
+          "name": "getPortfolioEvidenceQuality",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/portfolio/evidence-quality",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "portfolio",
+                "evidence-quality"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: getPortfolioEvidenceQuality"
+          }
+        },
+        {
+          "name": "listOperatorOrders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "orders"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: listOperatorOrders"
+          }
+        },
+        {
+          "name": "listProviderHealth",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/providers/health",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "providers",
+                "health"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: listProviderHealth"
+          }
+        },
+        {
+          "name": "listReconciliationBreaks",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/reconciliation/breaks",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "reconciliation",
+                "breaks"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: listReconciliationBreaks"
+          }
+        },
+        {
+          "name": "listOperatorHalts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/halts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "halts"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: listOperatorHalts"
+          }
+        },
+        {
+          "name": "listOperatorLimitProposals",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/limits/proposals",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "limits",
+                "proposals"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: listOperatorLimitProposals"
+          }
+        },
+        {
+          "name": "createOperatorLimitProposal",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/limits/proposals",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "limits",
+                "proposals"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: createOperatorLimitProposal",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "approveOperatorLimitProposal",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/limits/{restriction_id}/approve",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "limits",
+                "{restriction_id}",
+                "approve"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: approveOperatorLimitProposal",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "listAuditEvents",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/audit/events",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "audit",
+                "events"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: listAuditEvents"
+          }
+        }
+      ]
+    }
+  ]
+}

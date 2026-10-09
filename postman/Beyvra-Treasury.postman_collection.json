@@ -1,0 +1,1096 @@
+{
+  "info": {
+    "name": "Beyvra Treasury",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Generated from contracts/openapi/beyvra-treasury-v1.yaml. OpenAPI remains authoritative. No secrets embedded."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "bearer_token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "API",
+      "item": [
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/accounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "accounts"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_accounts_retrieve"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/cash",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "cash"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_cash_retrieve"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/cash/{currency}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "cash",
+                "{currency}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_cash_retrieve_2"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/liquidity",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "liquidity"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_liquidity_retrieve"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/liquidity/{currency}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "liquidity",
+                "{currency}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_liquidity_retrieve_2"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/institutional/liquidity",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "institutional",
+                "liquidity"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_institutional_liquidity_retrieve"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/collateral",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "collateral"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_collateral_retrieve"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/collateral/{asset}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "collateral",
+                "{asset}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_collateral_retrieve_2"
+          }
+        },
+        {
+          "name": "Side-effect-free simulation preview",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/collateral/mobility/preview",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "collateral",
+                "mobility",
+                "preview"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_collateral_mobility_preview_create",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/funding-requirements",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "funding-requirements"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_funding_requirements_retrieve"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/funding-requirements/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "funding-requirements",
+                "{id}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: treasuryGetTreasuryFundingRequirementsId"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/intraday",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "intraday"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_intraday_retrieve"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/intraday/{currency}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "intraday",
+                "{currency}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_intraday_retrieve_2"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/forecast",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "forecast"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_forecast_retrieve"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/forecast/{currency}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "forecast",
+                "{currency}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_forecast_retrieve_2"
+          }
+        },
+        {
+          "name": "Side-effect-free simulation preview",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/transfer-plans/preview",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "transfer-plans",
+                "preview"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_transfer_plans_preview_create",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/transfer-plans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "transfer-plans"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_transfer_plans_retrieve"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/transfer-plans/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "transfer-plans",
+                "{id}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: treasuryGetTreasuryTransferPlansId"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/settlement-funding",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "settlement-funding"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_settlement_funding_retrieve"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/settlement-funding/{settlement_id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "settlement-funding",
+                "{settlement_id}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_settlement_funding_retrieve_2"
+          }
+        },
+        {
+          "name": "Side-effect-free simulation preview",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/stress/preview",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "stress",
+                "preview"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_stress_preview_create",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/treasury/reconciliation/status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "treasury",
+                "reconciliation",
+                "status"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_reconciliation_status_retrieve"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/treasury/accounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "treasury",
+                "accounts"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_operator_treasury_accounts_retrieve"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/treasury/accounts/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "treasury",
+                "accounts",
+                "{id}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: treasuryGetOperatorTreasuryAccountsId"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/treasury/transfer-plans",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "treasury",
+                "transfer-plans"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_operator_treasury_transfer_plans_retrieve"
+          }
+        },
+        {
+          "name": "Side-effect-free simulation preview",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/treasury/transfer-plans/{id}/simulate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "treasury",
+                "transfer-plans",
+                "{id}",
+                "simulate"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: treasuryPostOperatorTreasuryTransferPlansIdSimulate",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Side-effect-free simulation preview",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/treasury/transfer-plans/{id}/cancel",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "treasury",
+                "transfer-plans",
+                "{id}",
+                "cancel"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: treasuryPostOperatorTreasuryTransferPlansIdCancel",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/treasury/stress-scenarios",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "treasury",
+                "stress-scenarios"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_operator_treasury_stress_scenarios_retrieve"
+          }
+        },
+        {
+          "name": "Side-effect-free simulation preview",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/treasury/stress/run",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "treasury",
+                "stress",
+                "run"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_operator_treasury_stress_run_create",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/treasury/exceptions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "treasury",
+                "exceptions"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_operator_treasury_exceptions_retrieve"
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/treasury/exceptions/{id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "treasury",
+                "exceptions",
+                "{id}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: treasuryGetOperatorTreasuryExceptionsId"
+          }
+        },
+        {
+          "name": "Side-effect-free simulation preview",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/treasury/exceptions/{id}/assign",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "treasury",
+                "exceptions",
+                "{id}",
+                "assign"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: treasuryPostOperatorTreasuryExceptionsIdAssign",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Side-effect-free simulation preview",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/treasury/exceptions/{id}/escalate",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "treasury",
+                "exceptions",
+                "{id}",
+                "escalate"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: treasuryPostOperatorTreasuryExceptionsIdEscalate",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Side-effect-free simulation preview",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/treasury/exceptions/{id}/resolve",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "treasury",
+                "exceptions",
+                "{id}",
+                "resolve"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: treasuryPostOperatorTreasuryExceptionsIdResolve",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/treasury/reconciliation",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "treasury",
+                "reconciliation"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_operator_treasury_reconciliation_retrieve"
+          }
+        },
+        {
+          "name": "Side-effect-free simulation preview",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/treasury/reconciliation/run",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "treasury",
+                "reconciliation",
+                "run"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_operator_treasury_reconciliation_run_create",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Tenant-scoped simulation/readiness data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{bearer_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operator/treasury/funding-requirements/{id}/evidence",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "operator",
+                "treasury",
+                "funding-requirements",
+                "{id}",
+                "evidence"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: treasuryGetOperatorTreasuryFundingRequirementsIdEvidence"
+          }
+        }
+      ]
+    }
+  ]
+}

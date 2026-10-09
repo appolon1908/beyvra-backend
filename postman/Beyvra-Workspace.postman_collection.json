@@ -1,0 +1,231 @@
+{
+  "info": {
+    "name": "Beyvra Workspace",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Generated from contracts/openapi/beyvra-workspace-v1.yaml. OpenAPI remains authoritative. No secrets embedded."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "bearer_token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "API",
+      "item": [
+        {
+          "name": "listWatchlists",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/watchlists",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "watchlists"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-workspace-v1.yaml\noperationId: listWatchlists"
+          }
+        },
+        {
+          "name": "createWatchlist",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/watchlists",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "watchlists"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-workspace-v1.yaml\noperationId: createWatchlist",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "getWatchlist",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/watchlists/{watchlist_id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "watchlists",
+                "{watchlist_id}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-workspace-v1.yaml\noperationId: getWatchlist"
+          }
+        },
+        {
+          "name": "renameWatchlist",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/watchlists/{watchlist_id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "watchlists",
+                "{watchlist_id}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-workspace-v1.yaml\noperationId: renameWatchlist",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "deleteWatchlist",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/watchlists/{watchlist_id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "watchlists",
+                "{watchlist_id}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-workspace-v1.yaml\noperationId: deleteWatchlist"
+          }
+        },
+        {
+          "name": "listWatchlistItems",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/watchlists/{watchlist_id}/items",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "watchlists",
+                "{watchlist_id}",
+                "items"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-workspace-v1.yaml\noperationId: listWatchlistItems"
+          }
+        },
+        {
+          "name": "addWatchlistItem",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/watchlists/{watchlist_id}/items",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "watchlists",
+                "{watchlist_id}",
+                "items"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-workspace-v1.yaml\noperationId: addWatchlistItem",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "deleteWatchlistItem",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/watchlists/{watchlist_id}/items/{instrument_id}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "watchlists",
+                "{watchlist_id}",
+                "items",
+                "{instrument_id}"
+              ]
+            },
+            "description": "Derived from contracts/openapi/beyvra-workspace-v1.yaml\noperationId: deleteWatchlistItem"
+          }
+        }
+      ]
+    }
+  ]
+}
