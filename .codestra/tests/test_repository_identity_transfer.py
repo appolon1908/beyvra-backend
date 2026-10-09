@@ -56,21 +56,27 @@ class RepositoryTransferSecurityTests(unittest.TestCase):
     def test_old_owner_and_wrong_repo_id_are_both_rejected(self):
         namespace = runpy.run_path(str(VALIDATOR), run_name="identity_rejection_tests")
         contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
-        with mock.patch.dict(os.environ, {
-            "GITHUB_REPOSITORY": "appolon1908-hue/beyvra-backend",
-            "GITHUB_REPOSITORY_ID": str(STABLE_ID),
-        }):
-            with self.assertRaisesRegex(
+        with (
+            mock.patch.dict(os.environ, {
+                "GITHUB_REPOSITORY": "appolon1908-hue/beyvra-backend",
+                "GITHUB_REPOSITORY_ID": str(STABLE_ID),
+            }),
+            self.assertRaisesRegex(
                 namespace["ContractError"], "outside the protected catalog identity map"
-            ):
-                namespace["validate"](contract)
+            ),
+        ):
+            namespace["validate"](contract)
 
-        with mock.patch.dict(os.environ, {
-            "GITHUB_REPOSITORY": EXPECTED_REPOSITORY,
-            "GITHUB_REPOSITORY_ID": str(STABLE_ID + 1),
-        }):
-            with self.assertRaisesRegex(namespace["ContractError"], "stable repository ID mismatch"):
-                namespace["validate"](contract)
+        with (
+            mock.patch.dict(os.environ, {
+                "GITHUB_REPOSITORY": EXPECTED_REPOSITORY,
+                "GITHUB_REPOSITORY_ID": str(STABLE_ID + 1),
+            }),
+            self.assertRaisesRegex(
+                namespace["ContractError"], "stable repository ID mismatch"
+            ),
+        ):
+            namespace["validate"](contract)
 
 
 if __name__ == "__main__":
