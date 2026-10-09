@@ -195,7 +195,7 @@ EXPECTED_IDENTITIES: dict[str, tuple[int, str, bool, bool]] = {
     "appolon1908-hue/Keycloak": (1347523366, "identity", True, False),
     "appolon1908-hue/Middleware-": (1347559071, "canonical-middleware", False, False),
     "appolon1908-hue/codestra": (1319808791, "application", True, False),
-    "appolon1908-hue/beyvra-backend": (1319831182, "application", True, False),
+    "appolon1908/beyvra-backend": (1319831182, "application", True, False),
     "appolon1908-hue/backend2": (1319903950, "application", True, False),
     "appolon1908-hue/beyvra-frontend": (1320246591, "application", True, False),
     "appolon1908-hue/scrapper": (1329513537, "migration-evidence", False, False),
@@ -225,7 +225,7 @@ EXPECTED_ARTIFACT_POLICIES: dict[
         "github",
         "github",
     ),
-    "appolon1908-hue/beyvra-backend": (
+    "appolon1908/beyvra-backend": (
         (
             "ghcr.io/appolon1908-hue/beyvra-backend",
             "ghcr.io/appolon1908-hue/beyvra-backend-edge",
@@ -341,7 +341,7 @@ APPROVED_COMPLEX_SCRIPT_SHA256: dict[str, dict[str, str]] = {
             "aa744362bbc848830992da7752e2fd6"
         ),
     },
-    "appolon1908-hue/beyvra-backend": {
+    "appolon1908/beyvra-backend": {
         "FX/release-init-prod.sh": "cef5fadd788f5ae5c9ba28a857bfe516e47b671e36aafcf3817b4c20b9e5115b",
         "operations/verify_release_identity.py": "8aadfc14fa376ba46483216c6323d589d4603c71d42f5a77c29286edb5b5cf0a",
         "scripts/certify_staging_api.py": (
@@ -423,7 +423,7 @@ APPROVED_CONTROL_PLANE_WORKFLOW_SHA256: dict[str, dict[str, str]] = {
             "df31ff2da8175d2a63e881696b25b0ee63"
         ),
     },
-    "appolon1908-hue/beyvra-backend": {
+    "appolon1908/beyvra-backend": {
         ".github/workflows/ci.yml": "bc0543a382d1be820a82922cdfb86c0ddb09467141882408420ebf1fbf665053",
     },
     "appolon1908-hue/beyvra-frontend": {
@@ -465,7 +465,7 @@ APPROVED_JOB_EXECUTABLE_CONFIGURATION_SHA256: dict[str, dict[str, str]] = {
         ".github/workflows/lead-automation-v1.yml": "9cdf5b9ce21f528bb8d0cb29b170586d212f5dfeb0e4ad237bb531a41bd89274",
         ".github/workflows/odoo-calling-contract.yml": "a186063edd3d780a5f813090b7364edb9af23e3dba845dc49c476e62acd44fd9",
     },
-    "appolon1908-hue/beyvra-backend": {
+    "appolon1908/beyvra-backend": {
         # Isolated PostgreSQL test services; exact workflow bytes remain pinned.
         ".github/workflows/enterprise-api.yml": ("521929336b5c277a2bcc4bf23013e3e8" "eeda95c4622bbaca1338944e5094f96f"),
         ".github/workflows/workspace-api.yml": ("cc81f48ede81ffd8425e256c0cb44972" "6490e7937f5a2e6fce23aaca6ccbb86b"),
@@ -509,7 +509,7 @@ APPROVED_READ_ONLY_SCRIPT_INVOCATIONS: dict[
             frozenset({("--mode", "validate")}),
         ),
     },
-    "appolon1908-hue/beyvra-backend": {
+    "appolon1908/beyvra-backend": {
         "operations/one_click_readonly_release.py": (
             "66f853c64b440615179cddb3a67ad027017fec0d17d5ed56178ec5b2ce9173ba",
             frozenset({("--self-test",)}),
