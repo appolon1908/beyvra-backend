@@ -18,7 +18,7 @@ jobs:
           persist-credentials: false
       - name: Install validation tools
         run: python3 -m pip install --disable-pip-version-check PyYAML==6.0.3 ruff==0.15.6 jsonschema==4.26.0 rfc3339-validator==0.1.4 openapi-spec-validator==0.7.2
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '22'
       - name: Install locked AsyncAPI validation tools
