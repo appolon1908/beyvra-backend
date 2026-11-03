@@ -30,3 +30,16 @@ class SensitiveCachePolicyTests(SimpleTestCase):
 
     def test_static_cache_is_not_changed(self):
         self.assertEqual(self.response("/static/app.js", "public, max-age=3600")["Cache-Control"], "public, max-age=3600")
+
+    def test_public_no_store_is_repaired_for_all_sensitive_namespaces(self):
+        for path in ("/api/v1/portfolio/risk", "/auth/callback", "/ws/ticket"):
+            with self.subTest(path=path):
+                response = self.response(path, "PUBLIC, no-store, max-age=300")
+                directives = {
+                    item.strip().lower()
+                    for item in response["Cache-Control"].split(",")
+                }
+                self.assertNotIn("public", directives)
+                self.assertTrue({"private", "no-store"}.issubset(directives))
+                self.assertEqual(response["Pragma"], "no-cache")
+                self.assertEqual(response["Expires"], "0")
