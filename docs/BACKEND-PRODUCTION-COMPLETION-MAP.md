@@ -1,7 +1,7 @@
 # Backend Production Completion Map
 
 This is a source inventory, not a production completion certificate. It records the
-implementation present after reconciling the platform API with current `main`.
+implementation present on this stacked B10 branch.
 Listed migrations are source files, not proof that a database has applied them.
 
 ## Source authorities
@@ -20,17 +20,26 @@ Listed migrations are source files, not proof that a database has applied them.
 The original map's proposed `PlatformConfig`, `TenantEntitlement`, `FinancialLedger`,
 `FinancialReservation`, `WebhookInbox`, and `WebhookDeadLetter` authorities are not
 established by this source inventory. Do not create duplicate authorities to match
-those names. This inventory does not certify canonical order, account, market
-snapshot, realtime ticket/resume, or provider webhook production readiness.
+those names. Canonical milestone modules on this branch include
+`FX/apps/trading/api/views.py`,
+`FX/apps/trading/api/account_projections_views.py`,
+`FX/reference_data/market_data_views.py`, `FX/ws/realtime_views.py`, and
+`FX/financial_boundary/canonical_webhook_views.py`. Module presence alone does
+not establish working end-to-end integration.
 
-## Platform API boundary
+V1 realtime tickets, snapshots and replay deliberately return 503 because no
+consuming transport or durable ordered replay authority is bound. Verified
+provider webhooks return 503 without recording a consumed marker because no
+canonical execution handler is bound. Neither route is production-complete.
 
-- `FX/FX/urls.py` mounts `platform_ops.platform_urls` at `/api/v1/platform/`.
-- `GET /api/v1/platform/config` exposes public configuration using the existing safety-state authority.
-- `GET /api/v1/platform/capabilities` supports optional session-bound authentication; compliance queries use the resolved tenant context and do not persist an eligibility decision.
-- Provider health requires the existing operator authorization check; being ordinary staff alone does not grant access.
-- Conditional responses retain private, no-store cache policy. An unhealthy system disables simulation availability.
-- Source inventory does not prove tenant isolation or idempotency for every other API. Those require their own tests and exact-revision evidence.
+## Route and data boundaries
+
+`FX/FX/urls.py` mounts platform configuration, canonical market, realtime and
+provider webhook views. Route presence does not certify permissions, provider
+integration, or frontend behavior. The canonical market views return finite,
+explicitly simulated fixtures, not live provider data or replayable market history.
+The existing platform capabilities implementation on this branch still requires
+its own security and tenant review; newer main corrections are not implied here.
 
 ## Verification and release boundaries
 

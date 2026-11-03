@@ -23,6 +23,11 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from users.views import ManageUserView, SessionResolveView
 from apps.workspace.bootstrap import WorkspaceBootstrapView
 from ws import v2 as realtime_v2
+from ws.realtime_views import (
+    RealtimeResumeView,
+    RealtimeSnapshotView,
+    RealtimeTicketView,
+)
 from news_app import views as news_views
 from notifications import views as notification_views
 from users import urls as user_urls
@@ -47,6 +52,9 @@ urlpatterns = [
     path("api/v1/alerts/<uuid:alert_id>", notification_views.UserAlertDetail.as_view(), name="alert_detail_v1"),
     path("api/v1/session", SessionResolveView.as_view(), name="session_resolve_v1"),
     path("api/v1/workspace/bootstrap", WorkspaceBootstrapView.as_view(), name="workspace_bootstrap_v1"),
+    path("api/v1/realtime/ticket", RealtimeTicketView.as_view(), name="realtime_ticket_v1"),
+    path("api/v1/realtime/snapshot", RealtimeSnapshotView.as_view(), name="realtime_snapshot_v1"),
+    path("api/v1/realtime/resume", RealtimeResumeView.as_view(), name="realtime_resume_v1"),
     path("api/v1/realtime/v2/connection-token", realtime_v2.connection_token, name="realtime_v2_connection_token"),
     path("api/v1/realtime/v2/subscription-token", realtime_v2.subscription_token, name="realtime_v2_subscription_token"),
     path("api/v1/realtime/v2/authorize-subscription", realtime_v2.authorize_subscription, name="realtime_v2_authorize_subscription"),
@@ -100,6 +108,9 @@ urlpatterns = [
     path("api/v1/institutional/liquidity", InstitutionalLiquidityView.as_view(), name="institutional_liquidity_v1"),
     path("api/v1/operator/treasury/", include("treasury.operator_urls")),
     path("api/v1/platform/", include("platform_ops.platform_urls")),
+    # Canonical Order Management routes aliased at /api/v1/
+    path("api/v1/", include("apps.trading.api.urls")),
+    path("api/v1/trading/", include("apps.trading.api.urls")),
     path("api/v1/system/", include("platform_ops.public_urls")),
     path("api/v1/operator/system/", include("platform_ops.operator_urls")),
     path("api/internal/v1/", include("operations.operator_urls")),
