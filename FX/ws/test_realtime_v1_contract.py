@@ -20,25 +20,22 @@ class RealtimeV1ContractTests(TestCase):
         self.user = User.objects.create_user(
             email=f"rt-test-{uuid.uuid4()}@example.invalid",
             phone_number=f"+1202{uuid.uuid4().int % 10000000:07d}",
-            password="testpassword"
+            password="testpassword",
         )
         self.org = Organization.objects.create(name=f"Org {uuid.uuid4()}")
         OrganizationMembership.objects.create(user=self.user, organization=self.org)
         self.client = APIClient()
         self.client.force_authenticate(self.user)
 
-    def test_post_realtime_ticket(self):
-        res = self.client.post("/api/v1/realtime/ticket")
-        self.assertEqual(res.status_code, 201)
-        self.assertIn("ticket", res.json())
-        self.assertEqual(res.json()["user_id"], str(self.user.pk))
-
-    def test_get_realtime_snapshot(self):
-        res = self.client.get("/api/v1/realtime/snapshot?topic=orders")
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(res.json()["topic"], "orders")
-
-    def test_get_realtime_resume_large_gap(self):
-        res = self.client.get("/api/v1/realtime/resume?after_sequence=1")
-        self.assertEqual(res.status_code, 409)
-        self.assertEqual(res.json()["error"]["code"], "SNAPSHOT_REQUIRED")
+    def test_v1_routes_fail_closed_until_transport_and_history_are_bound(self):
+        for method, path in (
+            (self.client.post, "/api/v1/realtime/ticket"),
+            (self.client.get, "/api/v1/realtime/snapshot?topic=orders"),
+            (self.client.get, "/api/v1/realtime/resume?after_sequence=1"),
+        ):
+            with self.subTest(path=path):
+                response = method(path)
+                self.assertEqual(response.status_code, 503)
+                self.assertEqual(
+                    response.json()["error"]["code"], "REALTIME_AUTHORITY_UNAVAILABLE"
+                )
