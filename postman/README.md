@@ -20,3 +20,19 @@ Current generated coverage:
 - Workspace: 8 operations
 - Codestra Real Wallet: 14 operations
 - Financial Service: 18 operations
+
+## Executable request authority checks
+
+Run `python -m unittest scripts.test_postman_authority` to compare each collection's
+method/path inventory to its own OpenAPI document. OpenAPI server path prefixes
+(`/api/v1` and the financial service's `/internal/v1`) are retained beneath the
+local `base_url`; production server hosts are never copied into default targets.
+Path parameters are Postman variables such as `{{watchlist_id}}`, initially blank.
+Set test-fixture identifiers explicitly before any staging run.
+
+The enterprise contract uses the `beyvra_access` cookie, not bearer authentication.
+Supply its synthetic/local or separately authorized staging cookie via the blank
+collection variable. The financial service requires client-certificate setup in
+Postman/Newman outside the collection; a URL alone does not establish mutual TLS.
+These tests validate derived request authority and do not execute API requests,
+prove application behavior, or grant runtime/production certification.

@@ -12,6 +12,22 @@
     {
       "key": "bearer_token",
       "value": ""
+    },
+    {
+      "key": "currency",
+      "value": ""
+    },
+    {
+      "key": "asset",
+      "value": ""
+    },
+    {
+      "key": "id",
+      "value": ""
+    },
+    {
+      "key": "settlement_id",
+      "value": ""
     }
   ],
   "item": [
@@ -30,11 +46,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/accounts",
+              "raw": "{{base_url}}/api/v1/treasury/accounts",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "accounts"
               ]
@@ -54,11 +72,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/cash",
+              "raw": "{{base_url}}/api/v1/treasury/cash",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "cash"
               ]
@@ -78,14 +98,16 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/cash/{currency}",
+              "raw": "{{base_url}}/api/v1/treasury/cash/{{currency}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "cash",
-                "{currency}"
+                "{{currency}}"
               ]
             },
             "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_cash_retrieve_2"
@@ -103,11 +125,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/liquidity",
+              "raw": "{{base_url}}/api/v1/treasury/liquidity",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "liquidity"
               ]
@@ -127,14 +151,16 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/liquidity/{currency}",
+              "raw": "{{base_url}}/api/v1/treasury/liquidity/{{currency}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "liquidity",
-                "{currency}"
+                "{{currency}}"
               ]
             },
             "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_liquidity_retrieve_2"
@@ -152,11 +178,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/institutional/liquidity",
+              "raw": "{{base_url}}/api/v1/institutional/liquidity",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "institutional",
                 "liquidity"
               ]
@@ -176,11 +204,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/collateral",
+              "raw": "{{base_url}}/api/v1/treasury/collateral",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "collateral"
               ]
@@ -200,14 +230,16 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/collateral/{asset}",
+              "raw": "{{base_url}}/api/v1/treasury/collateral/{{asset}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "collateral",
-                "{asset}"
+                "{{asset}}"
               ]
             },
             "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_collateral_retrieve_2"
@@ -230,11 +262,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/collateral/mobility/preview",
+              "raw": "{{base_url}}/api/v1/treasury/collateral/mobility/preview",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "collateral",
                 "mobility",
@@ -265,11 +299,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/funding-requirements",
+              "raw": "{{base_url}}/api/v1/treasury/funding-requirements",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "funding-requirements"
               ]
@@ -289,14 +325,16 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/funding-requirements/{id}",
+              "raw": "{{base_url}}/api/v1/treasury/funding-requirements/{{id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "funding-requirements",
-                "{id}"
+                "{{id}}"
               ]
             },
             "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: treasuryGetTreasuryFundingRequirementsId"
@@ -314,11 +352,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/intraday",
+              "raw": "{{base_url}}/api/v1/treasury/intraday",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "intraday"
               ]
@@ -338,14 +378,16 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/intraday/{currency}",
+              "raw": "{{base_url}}/api/v1/treasury/intraday/{{currency}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "intraday",
-                "{currency}"
+                "{{currency}}"
               ]
             },
             "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_intraday_retrieve_2"
@@ -363,11 +405,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/forecast",
+              "raw": "{{base_url}}/api/v1/treasury/forecast",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "forecast"
               ]
@@ -387,14 +431,16 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/forecast/{currency}",
+              "raw": "{{base_url}}/api/v1/treasury/forecast/{{currency}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "forecast",
-                "{currency}"
+                "{{currency}}"
               ]
             },
             "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_forecast_retrieve_2"
@@ -417,11 +463,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/transfer-plans/preview",
+              "raw": "{{base_url}}/api/v1/treasury/transfer-plans/preview",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "transfer-plans",
                 "preview"
@@ -451,11 +499,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/transfer-plans",
+              "raw": "{{base_url}}/api/v1/treasury/transfer-plans",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "transfer-plans"
               ]
@@ -475,14 +525,16 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/transfer-plans/{id}",
+              "raw": "{{base_url}}/api/v1/treasury/transfer-plans/{{id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "transfer-plans",
-                "{id}"
+                "{{id}}"
               ]
             },
             "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: treasuryGetTreasuryTransferPlansId"
@@ -500,11 +552,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/settlement-funding",
+              "raw": "{{base_url}}/api/v1/treasury/settlement-funding",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "settlement-funding"
               ]
@@ -524,14 +578,16 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/settlement-funding/{settlement_id}",
+              "raw": "{{base_url}}/api/v1/treasury/settlement-funding/{{settlement_id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "settlement-funding",
-                "{settlement_id}"
+                "{{settlement_id}}"
               ]
             },
             "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: v1_treasury_settlement_funding_retrieve_2"
@@ -554,11 +610,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/stress/preview",
+              "raw": "{{base_url}}/api/v1/treasury/stress/preview",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "stress",
                 "preview"
@@ -588,11 +646,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/treasury/reconciliation/status",
+              "raw": "{{base_url}}/api/v1/treasury/reconciliation/status",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "treasury",
                 "reconciliation",
                 "status"
@@ -613,11 +673,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/treasury/accounts",
+              "raw": "{{base_url}}/api/v1/operator/treasury/accounts",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "treasury",
                 "accounts"
@@ -638,15 +700,17 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/treasury/accounts/{id}",
+              "raw": "{{base_url}}/api/v1/operator/treasury/accounts/{{id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "treasury",
                 "accounts",
-                "{id}"
+                "{{id}}"
               ]
             },
             "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: treasuryGetOperatorTreasuryAccountsId"
@@ -664,11 +728,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/treasury/transfer-plans",
+              "raw": "{{base_url}}/api/v1/operator/treasury/transfer-plans",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "treasury",
                 "transfer-plans"
@@ -694,15 +760,17 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/treasury/transfer-plans/{id}/simulate",
+              "raw": "{{base_url}}/api/v1/operator/treasury/transfer-plans/{{id}}/simulate",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "treasury",
                 "transfer-plans",
-                "{id}",
+                "{{id}}",
                 "simulate"
               ]
             },
@@ -735,15 +803,17 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/treasury/transfer-plans/{id}/cancel",
+              "raw": "{{base_url}}/api/v1/operator/treasury/transfer-plans/{{id}}/cancel",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "treasury",
                 "transfer-plans",
-                "{id}",
+                "{{id}}",
                 "cancel"
               ]
             },
@@ -771,11 +841,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/treasury/stress-scenarios",
+              "raw": "{{base_url}}/api/v1/operator/treasury/stress-scenarios",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "treasury",
                 "stress-scenarios"
@@ -801,11 +873,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/treasury/stress/run",
+              "raw": "{{base_url}}/api/v1/operator/treasury/stress/run",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "treasury",
                 "stress",
@@ -836,11 +910,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/treasury/exceptions",
+              "raw": "{{base_url}}/api/v1/operator/treasury/exceptions",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "treasury",
                 "exceptions"
@@ -861,15 +937,17 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/treasury/exceptions/{id}",
+              "raw": "{{base_url}}/api/v1/operator/treasury/exceptions/{{id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "treasury",
                 "exceptions",
-                "{id}"
+                "{{id}}"
               ]
             },
             "description": "Derived from contracts/openapi/beyvra-treasury-v1.yaml\noperationId: treasuryGetOperatorTreasuryExceptionsId"
@@ -892,15 +970,17 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/treasury/exceptions/{id}/assign",
+              "raw": "{{base_url}}/api/v1/operator/treasury/exceptions/{{id}}/assign",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "treasury",
                 "exceptions",
-                "{id}",
+                "{{id}}",
                 "assign"
               ]
             },
@@ -933,15 +1013,17 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/treasury/exceptions/{id}/escalate",
+              "raw": "{{base_url}}/api/v1/operator/treasury/exceptions/{{id}}/escalate",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "treasury",
                 "exceptions",
-                "{id}",
+                "{{id}}",
                 "escalate"
               ]
             },
@@ -974,15 +1056,17 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/treasury/exceptions/{id}/resolve",
+              "raw": "{{base_url}}/api/v1/operator/treasury/exceptions/{{id}}/resolve",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "treasury",
                 "exceptions",
-                "{id}",
+                "{{id}}",
                 "resolve"
               ]
             },
@@ -1010,11 +1094,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/treasury/reconciliation",
+              "raw": "{{base_url}}/api/v1/operator/treasury/reconciliation",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "treasury",
                 "reconciliation"
@@ -1040,11 +1126,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/treasury/reconciliation/run",
+              "raw": "{{base_url}}/api/v1/operator/treasury/reconciliation/run",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "treasury",
                 "reconciliation",
@@ -1075,15 +1163,17 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/treasury/funding-requirements/{id}/evidence",
+              "raw": "{{base_url}}/api/v1/operator/treasury/funding-requirements/{{id}}/evidence",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "treasury",
                 "funding-requirements",
-                "{id}",
+                "{{id}}",
                 "evidence"
               ]
             },

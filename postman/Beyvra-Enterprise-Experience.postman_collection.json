@@ -10,7 +10,19 @@
       "value": "http://127.0.0.1:8000"
     },
     {
-      "key": "bearer_token",
+      "key": "watchlist_id",
+      "value": ""
+    },
+    {
+      "key": "alert_id",
+      "value": ""
+    },
+    {
+      "key": "restriction_id",
+      "value": ""
+    },
+    {
+      "key": "beyvra_access",
       "value": ""
     }
   ],
@@ -24,17 +36,19 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/watchlists",
+              "raw": "{{base_url}}/api/v1/watchlists",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "watchlists"
               ]
             },
@@ -47,22 +61,24 @@
             "method": "POST",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Content-Type",
+                "value": "application/json",
                 "type": "text"
               },
               {
-                "key": "Content-Type",
-                "value": "application/json",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/watchlists",
+              "raw": "{{base_url}}/api/v1/watchlists",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "watchlists"
               ]
             },
@@ -84,19 +100,21 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/watchlists/{watchlist_id}",
+              "raw": "{{base_url}}/api/v1/watchlists/{{watchlist_id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "watchlists",
-                "{watchlist_id}"
+                "{{watchlist_id}}"
               ]
             },
             "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: getWatchlist"
@@ -108,24 +126,26 @@
             "method": "PATCH",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Content-Type",
+                "value": "application/json",
                 "type": "text"
               },
               {
-                "key": "Content-Type",
-                "value": "application/json",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/watchlists/{watchlist_id}",
+              "raw": "{{base_url}}/api/v1/watchlists/{{watchlist_id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "watchlists",
-                "{watchlist_id}"
+                "{{watchlist_id}}"
               ]
             },
             "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: updateWatchlist",
@@ -146,19 +166,21 @@
             "method": "DELETE",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/watchlists/{watchlist_id}",
+              "raw": "{{base_url}}/api/v1/watchlists/{{watchlist_id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "watchlists",
-                "{watchlist_id}"
+                "{{watchlist_id}}"
               ]
             },
             "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: deleteWatchlist"
@@ -170,19 +192,21 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/watchlists/{watchlist_id}/items",
+              "raw": "{{base_url}}/api/v1/watchlists/{{watchlist_id}}/items",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "watchlists",
-                "{watchlist_id}",
+                "{{watchlist_id}}",
                 "items"
               ]
             },
@@ -195,24 +219,26 @@
             "method": "POST",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Content-Type",
+                "value": "application/json",
                 "type": "text"
               },
               {
-                "key": "Content-Type",
-                "value": "application/json",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/watchlists/{watchlist_id}/items",
+              "raw": "{{base_url}}/api/v1/watchlists/{{watchlist_id}}/items",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "watchlists",
-                "{watchlist_id}",
+                "{{watchlist_id}}",
                 "items"
               ]
             },
@@ -234,17 +260,19 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/alerts",
+              "raw": "{{base_url}}/api/v1/alerts",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "alerts"
               ]
             },
@@ -257,22 +285,24 @@
             "method": "POST",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Content-Type",
+                "value": "application/json",
                 "type": "text"
               },
               {
-                "key": "Content-Type",
-                "value": "application/json",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/alerts",
+              "raw": "{{base_url}}/api/v1/alerts",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "alerts"
               ]
             },
@@ -294,19 +324,21 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/alerts/{alert_id}",
+              "raw": "{{base_url}}/api/v1/alerts/{{alert_id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "alerts",
-                "{alert_id}"
+                "{{alert_id}}"
               ]
             },
             "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: getPriceAlert"
@@ -318,24 +350,26 @@
             "method": "PATCH",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Content-Type",
+                "value": "application/json",
                 "type": "text"
               },
               {
-                "key": "Content-Type",
-                "value": "application/json",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/alerts/{alert_id}",
+              "raw": "{{base_url}}/api/v1/alerts/{{alert_id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "alerts",
-                "{alert_id}"
+                "{{alert_id}}"
               ]
             },
             "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: updatePriceAlert",
@@ -356,19 +390,21 @@
             "method": "DELETE",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/alerts/{alert_id}",
+              "raw": "{{base_url}}/api/v1/alerts/{{alert_id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "alerts",
-                "{alert_id}"
+                "{{alert_id}}"
               ]
             },
             "description": "Derived from contracts/openapi/beyvra-enterprise-experience-v1.yaml\noperationId: deletePriceAlert"
@@ -380,17 +416,19 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/portfolio/summary",
+              "raw": "{{base_url}}/api/v1/portfolio/summary",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "portfolio",
                 "summary"
               ]
@@ -404,17 +442,19 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/portfolio/positions",
+              "raw": "{{base_url}}/api/v1/portfolio/positions",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "portfolio",
                 "positions"
               ]
@@ -428,17 +468,19 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/portfolio/performance",
+              "raw": "{{base_url}}/api/v1/portfolio/performance",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "portfolio",
                 "performance"
               ]
@@ -452,17 +494,19 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/portfolio/allocations",
+              "raw": "{{base_url}}/api/v1/portfolio/allocations",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "portfolio",
                 "allocations"
               ]
@@ -476,17 +520,19 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/portfolio/risk",
+              "raw": "{{base_url}}/api/v1/portfolio/risk",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "portfolio",
                 "risk"
               ]
@@ -500,17 +546,19 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/portfolio/evidence-quality",
+              "raw": "{{base_url}}/api/v1/portfolio/evidence-quality",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "portfolio",
                 "evidence-quality"
               ]
@@ -524,17 +572,19 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/orders",
+              "raw": "{{base_url}}/api/v1/operator/orders",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "orders"
               ]
@@ -548,17 +598,19 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/providers/health",
+              "raw": "{{base_url}}/api/v1/operator/providers/health",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "providers",
                 "health"
@@ -573,17 +625,19 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/reconciliation/breaks",
+              "raw": "{{base_url}}/api/v1/operator/reconciliation/breaks",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "reconciliation",
                 "breaks"
@@ -598,17 +652,19 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/halts",
+              "raw": "{{base_url}}/api/v1/operator/halts",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "halts"
               ]
@@ -622,17 +678,19 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/limits/proposals",
+              "raw": "{{base_url}}/api/v1/operator/limits/proposals",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "limits",
                 "proposals"
@@ -647,22 +705,24 @@
             "method": "POST",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Content-Type",
+                "value": "application/json",
                 "type": "text"
               },
               {
-                "key": "Content-Type",
-                "value": "application/json",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/limits/proposals",
+              "raw": "{{base_url}}/api/v1/operator/limits/proposals",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "limits",
                 "proposals"
@@ -686,25 +746,27 @@
             "method": "POST",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Content-Type",
+                "value": "application/json",
                 "type": "text"
               },
               {
-                "key": "Content-Type",
-                "value": "application/json",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/limits/{restriction_id}/approve",
+              "raw": "{{base_url}}/api/v1/operator/limits/{{restriction_id}}/approve",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "limits",
-                "{restriction_id}",
+                "{{restriction_id}}",
                 "approve"
               ]
             },
@@ -726,17 +788,19 @@
             "method": "GET",
             "header": [
               {
-                "key": "Authorization",
-                "value": "Bearer {{bearer_token}}",
+                "key": "Cookie",
+                "value": "beyvra_access={{beyvra_access}}",
                 "type": "text"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/operator/audit/events",
+              "raw": "{{base_url}}/api/v1/operator/audit/events",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "operator",
                 "audit",
                 "events"

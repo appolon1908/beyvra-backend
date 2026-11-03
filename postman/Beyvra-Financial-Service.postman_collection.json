@@ -12,6 +12,34 @@
     {
       "key": "bearer_token",
       "value": ""
+    },
+    {
+      "key": "wallet_id",
+      "value": ""
+    },
+    {
+      "key": "deposit_id",
+      "value": ""
+    },
+    {
+      "key": "withdrawal_id",
+      "value": ""
+    },
+    {
+      "key": "transaction_id",
+      "value": ""
+    },
+    {
+      "key": "hold_id",
+      "value": ""
+    },
+    {
+      "key": "action",
+      "value": ""
+    },
+    {
+      "key": "run_id",
+      "value": ""
     }
   ],
   "item": [
@@ -24,11 +52,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/health/live",
+              "raw": "{{base_url}}/internal/v1/health/live",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "health",
                 "live"
               ]
@@ -42,11 +72,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/health/ready",
+              "raw": "{{base_url}}/internal/v1/health/ready",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "health",
                 "ready"
               ]
@@ -66,11 +98,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/wallets",
+              "raw": "{{base_url}}/internal/v1/wallets",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "wallets"
               ]
             },
@@ -89,13 +123,15 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/wallets/{wallet_id}",
+              "raw": "{{base_url}}/internal/v1/wallets/{{wallet_id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "wallets",
-                "{wallet_id}"
+                "{{wallet_id}}"
               ]
             },
             "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: "
@@ -113,13 +149,15 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/wallets/{wallet_id}/balances",
+              "raw": "{{base_url}}/internal/v1/wallets/{{wallet_id}}/balances",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "wallets",
-                "{wallet_id}",
+                "{{wallet_id}}",
                 "balances"
               ]
             },
@@ -138,11 +176,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/deposits",
+              "raw": "{{base_url}}/internal/v1/deposits",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "deposits"
               ]
             },
@@ -161,13 +201,15 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/deposits/{deposit_id}",
+              "raw": "{{base_url}}/internal/v1/deposits/{{deposit_id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "deposits",
-                "{deposit_id}"
+                "{{deposit_id}}"
               ]
             },
             "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: "
@@ -185,11 +227,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/withdrawals",
+              "raw": "{{base_url}}/internal/v1/withdrawals",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "withdrawals"
               ]
             },
@@ -213,11 +257,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/withdrawals",
+              "raw": "{{base_url}}/internal/v1/withdrawals",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "withdrawals"
               ]
             },
@@ -250,11 +296,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/withdrawals/preview",
+              "raw": "{{base_url}}/internal/v1/withdrawals/preview",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "withdrawals",
                 "preview"
               ]
@@ -283,13 +331,15 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/withdrawals/{withdrawal_id}",
+              "raw": "{{base_url}}/internal/v1/withdrawals/{{withdrawal_id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "withdrawals",
-                "{withdrawal_id}"
+                "{{withdrawal_id}}"
               ]
             },
             "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: "
@@ -312,11 +362,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/transfers",
+              "raw": "{{base_url}}/internal/v1/transfers",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "transfers"
               ]
             },
@@ -349,11 +401,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/transfers/preview",
+              "raw": "{{base_url}}/internal/v1/transfers/preview",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "transfers",
                 "preview"
               ]
@@ -382,14 +436,16 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/ledger/transactions/{transaction_id}",
+              "raw": "{{base_url}}/internal/v1/ledger/transactions/{{transaction_id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "ledger",
                 "transactions",
-                "{transaction_id}"
+                "{{transaction_id}}"
               ]
             },
             "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: "
@@ -412,11 +468,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/ledger/holds",
+              "raw": "{{base_url}}/internal/v1/ledger/holds",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "ledger",
                 "holds"
               ]
@@ -450,15 +508,17 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/ledger/holds/{hold_id}/{action}",
+              "raw": "{{base_url}}/internal/v1/ledger/holds/{{hold_id}}/{{action}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "ledger",
                 "holds",
-                "{hold_id}",
-                "{action}"
+                "{{hold_id}}",
+                "{{action}}"
               ]
             },
             "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: ",
@@ -490,11 +550,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/reconciliation/runs",
+              "raw": "{{base_url}}/internal/v1/reconciliation/runs",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "reconciliation",
                 "runs"
               ]
@@ -523,14 +585,16 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/reconciliation/runs/{run_id}",
+              "raw": "{{base_url}}/internal/v1/reconciliation/runs/{{run_id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "internal",
+                "v1",
                 "reconciliation",
                 "runs",
-                "{run_id}"
+                "{{run_id}}"
               ]
             },
             "description": "Derived from contracts/financial-service/v1/openapi.yaml\noperationId: "

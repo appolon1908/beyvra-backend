@@ -39,3 +39,4 @@ jobs:
           python3 -m unittest discover -s scripts -p 'test_api_implementation_matrix.py'
           python3 scripts/generate_api_implementation_matrix.py --check
           python3 -m unittest discover -s scripts -p 'test_staging_certifier.py'
+          python3 -m unittest discover -s scripts -p 'test_postman_authority.py'
