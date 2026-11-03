@@ -1,4 +1,3 @@
-import hashlib
 import json
 import time
 from django.test import TestCase, override_settings
@@ -22,17 +21,19 @@ class CanonicalProviderWebhooksApiTests(TestCase):
     def setUp(self):
         self.client = APIClient()
 
-    def test_ingest_valid_provider_webhook(self):
+    def test_verified_webhook_remains_retryable_without_domain_handler(self):
         now = int(time.time())
         event_id = "evt_alpaca_1001"
         provider = "alpaca"
-        body = json.dumps({"event_type": "trade.execution", "order_id": "ord_1001"}).encode("utf-8")
+        body = json.dumps(
+            {"event_type": "trade.execution", "order_id": "ord_1001"}
+        ).encode("utf-8")
         sig = webhook_signature(
             provider_id=provider,
             event_id=event_id,
             timestamp=now,
             raw_body=body,
-            secret=SECRET
+            secret=SECRET,
         )
 
         headers = {
@@ -40,7 +41,7 @@ class CanonicalProviderWebhooksApiTests(TestCase):
             "HTTP_X_EVENT_ID": event_id,
             "HTTP_X_TIMESTAMP": str(now),
             "HTTP_X_SIGNATURE": sig,
-            "CONTENT_TYPE": "application/json"
+            "CONTENT_TYPE": "application/json",
         }
 
         res = self.client.post(
@@ -49,18 +50,11 @@ class CanonicalProviderWebhooksApiTests(TestCase):
             content_type="application/json",
             **headers,
         )
-        self.assertEqual(res.status_code, 202)
-        self.assertEqual(res.json()["status"], "accepted")
+        self.assertEqual(res.status_code, 503)
+        self.assertEqual(res.json()["error"]["code"], "WEBHOOK_PROCESSING_UNAVAILABLE")
+        from financial_boundary.models import ProcessedEvent
 
-        # Duplicate submission
-        res_dup = self.client.post(
-            f"/api/v1/webhooks/executions/{provider}",
-            body,
-            content_type="application/json",
-            **headers,
-        )
-        self.assertEqual(res_dup.status_code, 200)
-        self.assertEqual(res_dup.json()["status"], "duplicate")
+        self.assertFalse(ProcessedEvent.objects.exists())
 
     def test_ingest_disallowed_provider(self):
         res = self.client.post(

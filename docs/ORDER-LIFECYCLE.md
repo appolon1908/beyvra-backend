@@ -1,45 +1,44 @@
-# Canonical Order Lifecycle Specification
+# Canonical order lifecycle source contract
 
-## Overview
-The canonical Order Management System (OMS) enforces a deterministic, event-driven state machine. All views, tasks, and reconciliation workers delegate to this single state authority.
+`FX/apps/trading/domain/orders.py` owns the `OrderState` enumeration and
+`transition_order` validation. This table mirrors that source, including legacy
+`PENDING` / `ACCEPTED` and both cancellation spellings; it is not evidence that
+every view, worker or external provider has been integrated with that authority.
 
-## Canonical States
-- `DRAFT`: Order creation intent initialized with client parameters.
-- `PREVIEWED`: Pre-trade risk and quote locking completed.
-- `PENDING_SUBMIT`: Idempotent submission initiated and locked.
-- `ACKNOWLEDGED`: Order accepted by execution engine / simulated matching.
-- `OPEN`: Order working in the market.
-- `PARTIALLY_FILLED`: Order partially executed; remaining quantity working.
-- `FILLED`: Terminal state; all quantity executed.
-- `CANCEL_PENDING`: Cancellation requested, awaiting confirmation.
-- `CANCELED` / `CANCELLED`: Terminal state; unexecuted quantity cancelled and reservation released.
-- `REJECTED`: Terminal state; failed pre-trade risk, compliance, or validation checks.
-- `EXPIRED`: Terminal state; time-in-force or session expiration reached.
-- `UNKNOWN`: Provider timeout or uncertain transport status.
-- `RECONCILIATION_REQUIRED`: Out-of-band resolution required before transitioning state.
+| Current state | Allowed next states |
+|---|---|
+| DRAFT | PREVIEWED, REJECTED |
+| PREVIEWED | EXPIRED, PENDING_SUBMIT, REJECTED |
+| PENDING_SUBMIT | ACCEPTED, ACKNOWLEDGED, REJECTED, UNKNOWN |
+| PENDING | ACCEPTED, ACKNOWLEDGED, REJECTED, UNKNOWN |
+| ACCEPTED | ACKNOWLEDGED, CANCEL_PENDING, OPEN |
+| ACKNOWLEDGED | CANCEL_PENDING, EXPIRED, FILLED, OPEN, PARTIALLY_FILLED |
+| OPEN | CANCEL_PENDING, EXPIRED, FILLED, PARTIALLY_FILLED |
+| PARTIALLY_FILLED | CANCEL_PENDING, FILLED, PARTIALLY_FILLED |
+| FILLED | (terminal) |
+| CANCEL_PENDING | CANCELED, CANCELLED |
+| CANCELLED | (terminal) |
+| CANCELED | (terminal) |
+| REJECTED | (terminal) |
+| EXPIRED | (terminal) |
+| UNKNOWN | ACKNOWLEDGED, CANCELED, CANCELLED, FILLED, RECONCILIATION_REQUIRED, REJECTED |
+| RECONCILIATION_REQUIRED | ACKNOWLEDGED, CANCELED, CANCELLED, FILLED, REJECTED |
 
-## State Transition Rules
+## Transaction and authorization requirements
 
-```
-DRAFT -> PREVIEWED, REJECTED
-PREVIEWED -> PENDING_SUBMIT, REJECTED, EXPIRED
-PENDING_SUBMIT -> ACKNOWLEDGED, ACCEPTED, REJECTED, UNKNOWN
-ACKNOWLEDGED -> OPEN, PARTIALLY_FILLED, FILLED, CANCEL_PENDING, EXPIRED
-OPEN -> PARTIALLY_FILLED, FILLED, CANCEL_PENDING, EXPIRED
-PARTIALLY_FILLED -> PARTIALLY_FILLED, FILLED, CANCEL_PENDING
-CANCEL_PENDING -> CANCELED, CANCELLED
-UNKNOWN -> RECONCILIATION_REQUIRED, ACKNOWLEDGED, REJECTED, FILLED, CANCELED
-RECONCILIATION_REQUIRED -> ACKNOWLEDGED, REJECTED, FILLED, CANCELED
-```
+A legal state transition alone does not authorize a financial operation. Validate
+tenant/account ownership, freshness, compliance, risk, idempotency and reservation
+authority through the existing services before applying a protected transition.
+Persist state, immutable audit/event and outbox intent within their canonical
+transaction boundary; do not create a duplicate balance or reservation engine.
+The exact policy controls the quote-age limit, not an unconditional 1500ms claim
+from this document.
 
-## Atomic Execution Steps
-1. Lock preview record.
-2. Validate tenant and account ownership.
-3. Validate quote freshness (reject if quote age > 1500ms).
-4. Run compliance and risk policy checks.
-5. Lock account balance row and reserve buying power.
-6. Create order in `PENDING_SUBMIT`.
-7. Append immutable event to order audit log.
-8. Persist transactional outbox event.
-9. Store idempotent response.
-10. Commit transaction before async dispatch.
+`UNKNOWN` and `RECONCILIATION_REQUIRED` permit several transitions in the graph,
+but they require authoritative matching evidence and the reviewed reconciliation
+policy. A timeout or missing provider lookup cannot authorize rejection, funds
+release, failover or resend. See `ORDER-UNKNOWN-OUTCOME-RUNBOOK.md`.
+
+Source contract tests and local reconciliation do not certify live routing,
+financial effects, provider state or production readiness. Existing safety flags,
+authentication, tenant boundaries and release gates remain required.
