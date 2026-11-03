@@ -307,3 +307,31 @@ class PlatformCapabilitiesApiTests(APISimpleTestCase):
 
         with self.assertRaises(exceptions.PermissionDenied):
             platform_api._resolve_compliance_organization(request, user)
+
+    @patch("platform_ops.platform_api.HealthAuthority.system_state", return_value="UNHEALTHY")
+    def test_unhealthy_system_disables_simulation(self, _system_state):
+        response = self.client.get("/api/v1/platform/capabilities")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.json()["maintenance_mode"])
+        self.assertFalse(response.json()["simulation_enabled"])
+
+    def test_conditional_config_response_keeps_private_cache_policy(self):
+        first = self.client.get("/api/v1/platform/config")
+        response = self.client.get(
+            "/api/v1/platform/config", HTTP_IF_NONE_MATCH=first["ETag"]
+        )
+
+        self.assertEqual(response.status_code, 304)
+        self.assertEqual(response["Cache-Control"], "private, no-store")
+        self.assertEqual(response["Pragma"], "no-cache")
+        self.assertEqual(response["ETag"], first["ETag"])
+
+    @patch("platform_ops.platform_api.OrganizationMembership.objects.filter")
+    def test_staff_without_active_operator_membership_cannot_see_provider_health(
+        self, membership_filter
+    ):
+        membership_filter.return_value.exists.return_value = False
+        self.user.is_staff = True
+
+        self.assertFalse(platform_api._provider_health_visible(self.user))

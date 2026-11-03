@@ -22,7 +22,11 @@ from .instruments import (
     resolve_active_instrument,
 )
 from .models import Watchlist, WatchlistItem
-from .serializers import WatchlistItemSerializer, WatchlistSerializer
+from .serializers import (
+    WatchlistItemSerializer,
+    WatchlistReorderInputSerializer,
+    WatchlistSerializer,
+)
 
 
 class WorkspaceOwnedView(views.APIView):
@@ -541,3 +545,62 @@ class WatchlistItemDetailView(WorkspaceOwnedView):
                 after={"deleted": True, "watchlist_version": row.version},
             )
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class WatchlistItemReorderView(WorkspaceOwnedView):
+    @transaction.atomic
+    def patch(self, request, watchlist_id):
+        row = self.watchlist(watchlist_id, lock=True)
+        if row is None:
+            return Response(error_body("RESOURCE_NOT_FOUND"), status=404)
+
+        if not isinstance(request.data, dict):
+            return Response(error_body("VALIDATION_ERROR"), status=400)
+        if_match = request.headers.get("If-Match", "").strip('"')
+        expected_version = request.data.get("expected_version")
+        if not if_match and expected_version is None:
+            return Response(error_body("PRECONDITION_REQUIRED"), status=428)
+        if expected_version is not None and (
+            not isinstance(expected_version, int)
+            or isinstance(expected_version, bool)
+            or expected_version < 1
+        ):
+            return Response(error_body("VALIDATION_ERROR"), status=400)
+
+        current_version = getattr(row, "version", 1) if hasattr(row, "version") else 1
+        if if_match and if_match != str(current_version):
+            return Response(
+                error_body(
+                    "OPTIMISTIC_CONCURRENCY_CONFLICT",
+                    current_version=current_version,
+                ),
+                status=412,
+            )
+        if expected_version is not None and expected_version != current_version:
+            return Response(
+                error_body(
+                    "OPTIMISTIC_CONCURRENCY_CONFLICT",
+                    current_version=current_version,
+                ),
+                status=412,
+            )
+
+        items = list(WatchlistItem.objects.select_for_update().filter(watchlist=row))
+        # Keep the legacy alias, but do not treat an explicit empty list as
+        # a missing value and silently switch to another request field.
+        ordered_ids = request.data.get("item_ids", request.data.get("ordered_item_ids"))
+        serializer = WatchlistReorderInputSerializer(
+            data={"item_ids": ordered_ids},
+            context={"current_item_ids": [item.pk for item in items]},
+        )
+        if not serializer.is_valid():
+            return Response(error_body("VALIDATION_ERROR"), status=400)
+        by_id = {item.pk: item for item in items}
+        for idx, item_id in enumerate(serializer.validated_data["item_ids"]):
+            by_id[item_id].sort_order = idx
+        WatchlistItem.objects.bulk_update(items, ("sort_order",))
+        row.version += 1
+        row.save(update_fields=("version", "updated_at"))
+        row = self.watchlist(watchlist_id)
+
+        return Response(WatchlistSerializer(row).data)

@@ -20,7 +20,9 @@ class WorkspaceBootstrapSerializer(serializers.Serializer):
     instrument = serializers.DictField(read_only=True)
     instruments = serializers.ListField(child=serializers.CharField(), read_only=True)
     tradingRules = serializers.DictField(read_only=True)
-    savedAssetTabs = serializers.ListField(child=serializers.CharField(), read_only=True)
+    savedAssetTabs = serializers.ListField(
+        child=serializers.CharField(), read_only=True
+    )
     chartPreferences = serializers.DictField(read_only=True)
 
 
@@ -78,3 +80,17 @@ class WatchlistSerializer(serializers.ModelSerializer):
         if not normalized:
             raise serializers.ValidationError("Name is required.")
         return normalized
+
+
+class WatchlistReorderInputSerializer(serializers.Serializer):
+    """Reorder the complete owned set; never silently ignore unknown items."""
+
+    item_ids = serializers.ListField(child=serializers.UUIDField(), allow_empty=True)
+
+    def validate_item_ids(self, value):
+        current_ids = set(self.context["current_item_ids"])
+        if len(value) != len(set(value)) or set(value) != current_ids:
+            raise serializers.ValidationError(
+                "A complete unique owned item permutation is required."
+            )
+        return value
