@@ -1,51 +1,44 @@
 # Backend Production Completion Map
 
-Canonical domain models, services, migrations, and architecture boundaries for the Beyvra Backend.
+This is a source inventory, not a production completion certificate. It records the
+implementation present after reconciling the platform API with current `main`.
+Listed migrations are source files, not proof that a database has applied them.
 
-## 1. Canonical Authorities and Domain Matrix
+## Source authorities
 
-| Domain | Canonical Model Authority | Canonical Decision / Computation Service | Existing Endpoints & Aliases | Migration Baseline |
-|---|---|---|---|---|
-| **Platform Capabilities & Config** | `PlatformConfig`, `TenantEntitlement`, `TradingControl` | `platform_ops.health.services.HealthAggregator`, `apps.trading.application.simulation.simulation_available` | `GET /api/v1/platform/config`, `GET /api/v1/platform/capabilities` (New Canonical) | `platform_ops.0003_converged_controls` |
-| **Order Management (OMS)** | `apps.trading.models.TradingOrder`, `OrderPreview`, `OrderEvent` | `apps.trading.application.simulation` (create, preview, cancel), `apps.trading.domain.orders.transition_order` | `POST /api/v1/orders/preview`, `POST /api/v1/orders`, `GET /api/v1/orders`, `GET /api/v1/orders/{id}`, `POST /api/v1/orders/{id}/cancel`, `POST /api/v1/orders/{id}/replace` | `apps.trading.0009_merge_converged_trading_graph` |
-| **Financial Ledger & Projections** | `financial_boundary.models.FinancialLedger`, `financial_boundary.models.FinancialReservation` | `financial_boundary.services.FinancialProjectionService`, `apps.valuation.services.ValuationService` | `GET /api/v1/accounts`, `GET /api/v1/accounts/{id}/balances`, `GET /api/v1/accounts/{id}/buying-power`, `GET /api/v1/accounts/{id}/tax-lots` | `financial_boundary.0005_financial_halt_authority` |
-| **Market Data & Instruments** | `reference_data.models.Instrument`, `pricing_authority.models.MarketPrice` | `reference_data.services.InstrumentResolver`, `pricing_authority.services.PriceAuthority` | `GET /api/v1/instruments`, `GET /api/v1/markets/status`, `GET /api/v1/market/snapshot`, `GET /api/v1/market/candles` | `reference_data.0004_converged_instruments` |
-| **Watchlists & Alerts** | `apps.workspace.models.Watchlist`, `apps.workspace.models.WatchlistItem`, `notifications.models.Alert` | `apps.workspace.services.WatchlistService`, `notifications.services.AlertService` | `PATCH /api/v1/watchlists/{id}`, `PATCH /api/v1/watchlists/{id}/items/reorder`, `POST /api/v1/alerts` | `apps.workspace.0003_watchlist_versioning` |
-| **Compliance & Risk** | `apps.compliance.models.ComplianceProfile`, `apps.compliance.models.ComplianceDecision` | `apps.compliance.services.get_trading_eligibility`, `apps.trading.risk.RiskEngine` | `GET /api/v1/compliance/status`, `GET /api/v1/compliance/requirements`, `POST /api/v1/compliance/acknowledgements` | `apps.compliance.0014_override_constraints` |
-| **Realtime Event Stream** | `apps.foundation.models.OutboxEvent`, `ws.v2.models.StreamSequence` | `ws.v2.services.RealtimeDispatcher`, `ws.v2.consumers.UnifiedStreamConsumer` | `GET /api/v1/realtime/snapshot`, `GET /api/v1/realtime/resume`, `POST /api/v1/realtime/ticket` | `apps.foundation.0005_outbox_ordering` |
-| **Provider Webhooks** | `financial_boundary.models.WebhookInbox`, `financial_boundary.models.WebhookDeadLetter` | `financial_boundary.webhooks.WebhookIngestionService` | `POST /api/v1/webhooks/executions/{provider}`, `POST /api/v1/webhooks/market-data/{provider}` | `financial_boundary.0002_event_boundary` |
+| Domain | Existing source authority | Existing migration file |
+|---|---|---|
+| Platform configuration and capabilities | `FX/platform_ops/platform_api.py`; `HealthAuthority` in `FX/platform_ops/health/services.py`; simulation availability in `FX/apps/trading/application/simulation.py` | `FX/platform_ops/migrations/0003_complete_sli_inventory.py` |
+| Order management | `TradingOrder` in `FX/apps/trading/models.py`; `FX/apps/trading/api/views.py`; simulation and account services in `FX/apps/trading/application/` | `FX/apps/trading/migrations/0011_account_identity_boundary.py` |
+| Financial event boundary | `FinancialOutboxEvent`, `DeadLetterEvent`, `FinancialProjectionCursor` in `FX/financial_boundary/models.py`; `eventing.py`, `reconciliation.py`, `halts.py` in that package | `FX/financial_boundary/migrations/0005_financial_halt_authority.py` |
+| Reference data | `Instrument`, `InstrumentVersion`, `ProviderSymbolMapping` in `FX/reference_data/models.py`; `resolve_provider_symbol` in `FX/reference_data/services.py` | `FX/reference_data/migrations/0002_immutable_lineage.py` |
+| Pricing entitlements | `FX/pricing_authority/models.py`; `FX/pricing_authority/urls.py` | `FX/pricing_authority/migrations/0002_tenant_scoped_entitlements.py` |
+| Watchlists | `Watchlist`, `WatchlistItem` in `FX/apps/workspace/models.py`; `FX/apps/workspace/api.py` | `FX/apps/workspace/migrations/0001_initial.py` |
+| Compliance | `FX/apps/compliance/models.py`; `get_trading_eligibility` in `FX/apps/compliance/services.py` | `FX/apps/compliance/migrations/0014_override_constraints.py` |
+| Foundation events and audit | `OutboxEvent`, `ProcessedEvent`, `IdempotencyRecord`, `ApplicationAuditEvent`, `TradingControl` in `FX/apps/foundation/models.py`; `FX/apps/foundation/services.py` | `FX/apps/foundation/migrations/0002_audit_append_only.py` |
 
----
+The original map's proposed `PlatformConfig`, `TenantEntitlement`, `FinancialLedger`,
+`FinancialReservation`, `WebhookInbox`, and `WebhookDeadLetter` authorities are not
+established by this source inventory. Do not create duplicate authorities to match
+those names. In particular, this PR does not implement the later canonical order,
+account, market snapshot, realtime ticket/resume, or provider webhook milestones.
 
-## 2. Authentication, Tenancy & Security Boundaries
+## Platform API boundary
 
-* **BFF Session Model**: Session and JWT tokens are managed with `HttpOnly`, `SameSite=Lax`, `Secure` cookies.
-* **Tenant Isolation**: Every financial query must filter by `tenant_ref` and `subject_ref`. Cross-tenant lookups fail closed with `404 Not Found`.
-* **Idempotency**: All mutating state commands require `Idempotency-Key` persisted in PostgreSQL with atomic row leases.
-* **Non-Negotiable Live Capability Lock**:
-  ```ini
-  LIVE_TRADING_ENABLED=false
-  REAL_MONEY_ENABLED=false
-  DEPOSITS_ENABLED=false
-  WITHDRAWALS_ENABLED=false
-  EXTERNAL_EXECUTION_ENABLED=false
-  CUSTODY_ENABLED=false
-  ```
+- `FX/FX/urls.py` mounts `platform_ops.platform_urls` at `/api/v1/platform/`.
+- `GET /api/v1/platform/config` exposes public configuration using the existing safety-state authority.
+- `GET /api/v1/platform/capabilities` supports optional session-bound authentication; compliance queries use the resolved tenant context and do not persist an eligibility decision.
+- Provider health requires the existing operator authorization check; being ordinary staff alone does not grant access.
+- Conditional responses retain private, no-store cache policy. An unhealthy system disables simulation availability.
+- Source inventory does not prove tenant isolation or idempotency for every other API. Those require their own tests and exact-revision evidence.
 
----
+## Verification and release boundaries
 
-## 3. Legacy Route Delegation & Deprecation Map
+Platform regression entry point: `FX/platform_ops/tests/test_platform_capabilities_api.py`.
+Related suites live under `FX/apps/trading/tests/`, `FX/financial_boundary/tests/`,
+`FX/apps/compliance/tests/`, and `FX/apps/valuation/`.
 
-* Legacy `/api/trades/` delegates to canonical `apps.trading.api.views.TradesView`.
-* Legacy `/api/portfolio/summary/` delegates to canonical `apps.valuation.portfolio_api.PortfolioSummaryView`.
-* Legacy direct balance manipulation routes are disabled and return HTTP 503 `FEATURE_DISABLED`.
-
----
-
-## 4. Test Entry Points
-
-* `FX/apps/trading/tests/` (Execution authority, simulation E2E, reconciliation)
-* `FX/platform_ops/tests/` (Health, degraded mode, kill switch, capacity)
-* `FX/financial_boundary/tests/` (Financial ledger, idempotency, webhook ingestion)
-* `FX/apps/valuation/tests/` (PNL, NAV, portfolio projections)
-* `FX/apps/compliance/tests/` (Eligibility, overrides, sanctions, KYC)
+Production and staging activation remain unauthorized. Keep existing safety defaults,
+authentication, authorization, migration checks, security scans, and release gates.
+A clean source merge or local unit suite does not prove PostgreSQL migration state,
+provider integration, load behavior, hosted CI completion, or production readiness.
