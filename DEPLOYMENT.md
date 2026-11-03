@@ -1,52 +1,31 @@
-# Backend deployment
+# Deployment design — appolon1908/beyvra-backend
 
-## Required configuration
+This repository is classified as **product-domain-service** and remains independently deployable.
 
-Copy `.env.example` to the deployment secret store and provide real values. At minimum configure Django's `SECRET_KEY`, PostgreSQL, Redis, email, `ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS`, `CORS_ALLOWED_ORIGINS`, payment-provider secrets, `POLYGON_API_KEY`, `NEWS_DATA_API_KEY`, and `FIXER_API_KEY`.
+## Canonical integration boundary
 
-Never commit the populated environment file. Rotate the API credentials that were previously present in repository history.
+Public ingress remains **Caddy -> Kong**. Cross-system commands/effects use **Middleware :8095 /platform/v1**. This repository keeps its own domain/runtime ownership and must not become a duplicate command authority.
 
-## Validate
+## Detected deployment assets
 
-```sh
-docker build -t tradx-backend:release FX
-docker compose config
-docker compose up -d --build
-docker compose ps
-curl --fail https://YOUR_HOST/metrics
-```
+- Dockerfile/Containerfile detected: **true**
+- Compose detected: **true**
+- Kubernetes/Helm detected: **false**
+- Health/readiness signal detected: **true**
 
-The production web entrypoint waits for PostgreSQL and Redis, applies migrations, collects static files, and starts Gunicorn. Celery worker and beat services must use the same image and environment.
+The values above describe the current repository tree. They do not claim a runtime is deployed.
 
-Before directing traffic to a new release, back up PostgreSQL and run migrations as a distinct deployment step if your platform can execute more than one web replica concurrently.
+## Required deployment gates
 
-The `db-backup` service writes a PostgreSQL custom-format dump immediately on
-startup and then every `BACKUP_INTERVAL_SECONDS` (daily by default), retaining
-`BACKUP_RETENTION_DAYS` days locally. Verify a new file exists in `backups/`
-after every deployment and copy it to encrypted off-host storage. A guarded
-restore helper is available at `scripts/restore-backup.sh`; always restore into
-a separate staging database first.
+1. Build from an immutable Git SHA and, where containerized, record the immutable image digest.
+2. Keep provider/business effects disabled by default until the repository-specific production certification passes.
+3. Consume secrets by OpenBao/governed references only; do not commit credentials or copy secret values into evidence.
+4. Define health/readiness before staging activation. Current status: **detected-review-required**.
+5. Keep /internal/* and /metrics private; expose public APIs only through the reviewed Caddy/Kong route.
+6. Record staging deployment, API/readback, observability and rollback evidence before production promotion.
+7. Rollback must identify the prior SHA/image/config and must not require provider effects to validate.
+8. Cross-repo provider-changing effects must be issued through the Middleware command lifecycle with idempotency and readback/reconciliation.
 
-## Host and network preparation
+## Next implementation step
 
-1. Install Docker Engine and the Compose plugin from Docker's Ubuntu repository.
-2. Use an unprivileged deployment account with key-only SSH and access limited to `/srv/backend` and Docker.
-3. Keep PostgreSQL, Redis, Flower, and StatsD off the public network. Publish only the TLS reverse proxy.
-4. Configure encrypted off-host backups, retention alerts, and a successful restore drill before accepting real money.
-
-The release moves PostgreSQL from 12 to 16. Existing data must be migrated through a tested `pg_dump`/`pg_restore` rehearsal. Never attach the PostgreSQL 12 data directory directly to PostgreSQL 16.
-
-## Protected GitHub deployment
-
-Configure a GitHub `production` environment with required approval and these secrets:
-
-- `DEPLOY_HOST`, `DEPLOY_USER`, `DEPLOY_SSH_KEY`, `DEPLOY_KNOWN_HOSTS`
-- `GHCR_USER`, `GHCR_PULL_TOKEN`
-
-Run **Build and deploy backend** with `deploy=false` to publish an immutable image only. Use `deploy=true` after staging approval. The workflow backs up PostgreSQL before deploying the commit-addressed image.
-
-After deployment, verify authentication, wallet ownership boundaries, MFA, a sandbox deposit and failed withdrawal/refund, trade creation, WebSockets, Celery, health checks, and monitoring. Reconcile wallet balances against transactions.
-
-## Rollback
-
-Redeploy the previous commit-addressed `BACKEND_IMAGE` and run `docker compose up -d --wait`. Do not blindly reverse an applied schema migration. Use a reviewed backward migration or restore the pre-deploy backup into a separate database, validate it, and then cut over. Preserve payment-provider event IDs, logs, the failed image digest, and the database backup for investigation.
+This document and .codestra/deployment-contract.json are the deployment-design authority. Any missing runtime artifact (Docker/Compose/Kubernetes/health probe) must be added in a repo-owned implementation PR only when that runtime is actually required; do not invent an unused deployment stack.
