@@ -181,7 +181,7 @@ def validate_file(path, *, semantic=False):
 
 def main(paths, *, semantic=False):
     # An empty argv means "validate the whole contract surface", never
-    # "validate nothing" -- reporting success without opening a file would
+    # "validate nothing" -- reporting success without reading a file would
     # let a broken spec reach production behind a green check.
     documents = [Path(path) for path in paths] or canonical_specs()
     if not documents:
