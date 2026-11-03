@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -63,6 +64,22 @@ EXPECTED_OPENAPI = {
     "/v1/automation/security-alerts": {"post": ("createSecurityAlert", WRITE_SCOPE)},
     "/v1/automation/webhook-reconciliation": {"post": ("reconcileWebhookDelivery", WRITE_SCOPE)},
     "/v1/automation/operations/{operation_id}": {"get": ("getAutomationOperation", READ_SCOPE)},
+}
+EXPECTED_N8N_DEPENDENCIES = {
+    "n8n_governance_pr": 1,
+    "n8n_contract_pr": 9,
+    "middleware_contract_pr": 15,
+    "keycloak_contract_pr": 10,
+    "n8n_branch": "automation/beyvra-operations-v2-20260827",
+    "frontend_branch": "integration/automation-status-ui-v2-20260827",
+}
+EXPECTED_DEPENDENCY_LINES = {
+    "N8N PR #1 governance baseline",
+    "Middleware PR #15 operation policy",
+    "Keycloak PR #10 machine identities",
+    "N8N PR #9 control-plane contract",
+    "N8N automation/beyvra-operations-v2-20260827",
+    "beyvra-frontend integration/automation-status-ui-v2-20260827",
 }
 EXPECTED_HEADERS = {
     "ExpectedVersion": {'name': 'If-Match', 'in': 'header', 'required': True, 'schema': {'type': 'string', 'minLength': 1, 'maxLength': 255}},
@@ -159,6 +176,16 @@ def validate_fabric() -> dict[str, Any]:
 
 def validate_n8n_manifest(fabric: dict[str, Any]) -> dict[str, Any]:
     manifest = load_json(N8N_MANIFEST_PATH)
+    require(manifest.get("repository") == "appolon1908/beyvra-backend",
+            "n8n manifest repository identity drift")
+    dependencies = manifest.get("dependencies")
+    require(isinstance(dependencies, dict), "n8n dependencies must be an object")
+    require(set(dependencies) == set(EXPECTED_N8N_DEPENDENCIES),
+            "n8n dependency keys must match reviewed pins")
+    for key, expected in EXPECTED_N8N_DEPENDENCIES.items():
+        actual = dependencies[key]
+        require(type(actual) is type(expected) and actual == expected,
+                f"n8n dependency pin drift: {key}")
     require(manifest.get("schema_version") == "2.0", "unexpected n8n manifest schema version")
     require(manifest.get("status") == "SOURCE_ONLY", "n8n manifest must remain SOURCE_ONLY")
     require(manifest.get("workflow_family") == WORKFLOW_FAMILY, "n8n workflow family drift")
@@ -187,13 +214,37 @@ def validate_n8n_manifest(fabric: dict[str, Any]) -> dict[str, Any]:
         require(invariants.get(key) is True, f"invariant {key} must remain true")
     readme = load_text(N8N_README_PATH)
     require(f"machine_client  = {MACHINE_CLIENT}" in readme, "README machine client drift")
+    require(EXPECTED_DEPENDENCY_LINES <= set(readme.splitlines()),
+            "README dependency pins disagree with reviewed manifest")
     return manifest
 
 
 def validate_branch_map() -> None:
     branch_map = load_text(BRANCH_MAP_PATH)
-    for line in EXPECTED_BRANCH_REFS:
-        require(line in branch_map, f"branch map is missing: {line}")
+    # Examples and comments are not authoritative declarations. Unclosed
+    # comments/fences remain excluded rather than supplying a fallback pin.
+    text = re.sub(r"<!--.*?(?:-->|$)", "", branch_map, flags=re.DOTALL)
+    active_lines = []
+    fence = None
+    for raw_line in text.splitlines():
+        expanded = raw_line.expandtabs(4)
+        if fence is None and len(expanded) - len(expanded.lstrip(" ")) >= 4:
+            continue
+        line = raw_line.strip()
+        marker = re.match(r"(`{3,}|~{3,})", line)
+        if fence is not None:
+            if re.fullmatch(re.escape(fence[0]) + r"{" + str(fence[1]) + r",}", line):
+                fence = None
+            continue
+        if marker:
+            fence = (marker.group()[0], len(marker.group()))
+            continue
+        active_lines.append(line)
+    for expected in EXPECTED_BRANCH_REFS:
+        label = expected.split(":", 1)[0] + ":"
+        declarations = [line for line in active_lines if line.startswith(label)]
+        require(declarations == [expected],
+                f"branch map must contain one active exact declaration: {label}")
 
 
 def security_scope(operation: dict[str, Any]) -> list[dict[str, list[str]]]:
