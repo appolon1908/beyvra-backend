@@ -1,4 +1,4 @@
-# Deployment design — ingtrader21-spec/beyvra-backend
+# Deployment design — appolon1908/beyvra-backend
 
 This repository is classified as **product-domain-service** and remains independently deployable.
 

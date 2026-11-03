@@ -1,6 +1,6 @@
 {
   "schema": "codestra.deployment-contract.v1",
-  "repository": "ingtrader21-spec/beyvra-backend",
+  "repository": "appolon1908/beyvra-backend",
   "role": "product-domain-service",
   "standalone_required": true,
   "canonical_integration": {
