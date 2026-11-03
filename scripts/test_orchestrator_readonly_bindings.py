@@ -16,7 +16,7 @@ POLICY = runpy.run_path(
 class AsyncApiSourceBindingTests(unittest.TestCase):
     def test_readonly_validator_is_recognized(self):
         with patch.dict(
-            os.environ, {"GITHUB_REPOSITORY": "appolon1908-hue/beyvra-backend"}
+            os.environ, {"GITHUB_REPOSITORY": "appolon1908/beyvra-backend"}
         ):
             self.assertTrue(
                 POLICY["approved_read_only_script_invocation"](
@@ -26,7 +26,7 @@ class AsyncApiSourceBindingTests(unittest.TestCase):
 
     def test_unreviewed_arguments_are_rejected(self):
         with patch.dict(
-            os.environ, {"GITHUB_REPOSITORY": "appolon1908-hue/beyvra-backend"}
+            os.environ, {"GITHUB_REPOSITORY": "appolon1908/beyvra-backend"}
         ):
             self.assertFalse(
                 POLICY["approved_read_only_script_invocation"](
@@ -43,7 +43,7 @@ class AsyncApiSourceBindingTests(unittest.TestCase):
                 + '\nfetch("https://example.invalid");\n'
             )
             with patch.dict(
-                os.environ, {"GITHUB_REPOSITORY": "appolon1908-hue/beyvra-backend"}
+                os.environ, {"GITHUB_REPOSITORY": "appolon1908/beyvra-backend"}
             ):
                 self.assertFalse(
                     POLICY["approved_read_only_script_invocation"](

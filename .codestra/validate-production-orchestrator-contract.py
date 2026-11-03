@@ -41,7 +41,7 @@ MIDDLEWARE_RELEASE_VALIDATOR_SECURITY_SHA256 = (
     "8d8f21260babfae5eaedbdd46472b1ec"
 )
 BACKEND_RELEASE_VALIDATOR_SECURITY_SHA256 = (
-    "a1e7314d037d6f8921ef4fc21577d9a87b7c26c864b0d7dc56503130b9052f6d"
+    '0195cfc94f66ada743a3000eb1ba1f79fbd3f7c11edbe762ffbb49f9b6b3086a'
 )
 MONEYBEE_RELEASE_VALIDATOR_SECURITY_SHA256 = (
     "15dbaa6d571a1d1e72c09ca417cc9419"
@@ -52,7 +52,7 @@ EXPECTED_RELEASE_VALIDATOR_SECURITY_SHA256 = {
     "appolon1908-hue/Keycloak": STANDARD_RELEASE_VALIDATOR_SECURITY_SHA256,
     "appolon1908-hue/Middleware-": MIDDLEWARE_RELEASE_VALIDATOR_SECURITY_SHA256,
     "appolon1908-hue/codestra": STANDARD_RELEASE_VALIDATOR_SECURITY_SHA256,
-    "appolon1908-hue/beyvra-backend": BACKEND_RELEASE_VALIDATOR_SECURITY_SHA256,
+    "appolon1908/beyvra-backend": BACKEND_RELEASE_VALIDATOR_SECURITY_SHA256,
     "appolon1908-hue/backend2": STANDARD_RELEASE_VALIDATOR_SECURITY_SHA256,
     "appolon1908-hue/beyvra-frontend": STANDARD_RELEASE_VALIDATOR_SECURITY_SHA256,
     "appolon1908-hue/scrapper": STANDARD_RELEASE_VALIDATOR_SECURITY_SHA256,
@@ -360,7 +360,7 @@ EXPECTED_IDENTITIES: dict[str, tuple[int, str, bool, bool]] = {
     "appolon1908-hue/Keycloak": (1347523366, "identity", True, False),
     "appolon1908-hue/Middleware-": (1347559071, "canonical-middleware", False, False),
     "appolon1908-hue/codestra": (1319808791, "application", True, False),
-    "appolon1908-hue/beyvra-backend": (1319831182, "application", True, False),
+    "appolon1908/beyvra-backend": (1319831182, "application", True, False),
     "appolon1908-hue/backend2": (1319903950, "application", True, False),
     "appolon1908-hue/beyvra-frontend": (1320246591, "application", True, False),
     "appolon1908-hue/scrapper": (1329513537, "migration-evidence", False, False),
@@ -390,7 +390,7 @@ EXPECTED_ARTIFACT_POLICIES: dict[
         "github",
         "github",
     ),
-    "appolon1908-hue/beyvra-backend": (
+    "appolon1908/beyvra-backend": (
         (
             "ghcr.io/appolon1908-hue/beyvra-backend",
             "ghcr.io/appolon1908-hue/beyvra-backend-edge",
@@ -554,7 +554,7 @@ APPROVED_COMPLEX_SCRIPT_SHA256: dict[str, dict[str, str]] = {
             "ebc7ce5430600068d8112e86a6095f30"
         ),
     },
-    "appolon1908-hue/beyvra-backend": {
+    "appolon1908/beyvra-backend": {
         "FX/release-init-prod.sh": "cef5fadd788f5ae5c9ba28a857bfe516e47b671e36aafcf3817b4c20b9e5115b",
         "operations/verify_release_identity.py": "8aadfc14fa376ba46483216c6323d589d4603c71d42f5a77c29286edb5b5cf0a",
         "scripts/certify_staging_api.py": (
@@ -697,7 +697,7 @@ APPROVED_CONTROL_PLANE_WORKFLOW_SHA256: dict[str, dict[str, str]] = {
             "df31ff2da8175d2a63e881696b25b0ee63"
         ),
     },
-    "appolon1908-hue/beyvra-backend": {
+    "appolon1908/beyvra-backend": {
         ".github/workflows/ci.yml": "1b5f10691f3f3e35f51fc5f353f0d126bd8ec53225951c20c6b44b55634196bc",
     },
     "appolon1908-hue/beyvra-frontend": {
@@ -742,7 +742,7 @@ APPROVED_JOB_EXECUTABLE_CONFIGURATION_SHA256: dict[str, dict[str, str]] = {
             "0387c7920d1f2f59c6235166341e5b2"
         ),
     },
-    "appolon1908-hue/beyvra-backend": {
+    "appolon1908/beyvra-backend": {
         ".github/workflows/email-boundary-ci.yml": "13ec97e8fb3cf77dcea400c2c8d4d5f089a567852ebcfa7f8efc581efa6f1fd6",
         ".github/workflows/enterprise-api.yml": "3abb88d703e44904cd921999fec59bfd8a81374383e1f8a742362a0bd41ed8cb",
         ".github/workflows/registration-safety-ci.yml": "8359be31987dbfc7b3d570ce12201fd0e94a21c71c8dec303052ef44a87fb25c",
@@ -761,7 +761,7 @@ APPROVED_JOB_EXECUTABLE_CONFIGURATION_SHA256: dict[str, dict[str, str]] = {
     },
 }
 APPROVED_OFFLINE_RUN_SHA256: dict[str, dict[str, frozenset[str]]] = {
-    "appolon1908-hue/beyvra-backend": {
+    "appolon1908/beyvra-backend": {
         ".github/workflows/certification-ci.yml": frozenset(
             {"90342c1a6aff24d02b18a064f6fc1affcddbe05fb894ccb22122b9a649358387"}
         ),
@@ -887,7 +887,7 @@ APPROVED_READ_ONLY_SCRIPT_INVOCATIONS: dict[
             frozenset({(), ("--apply",), ("--verify-live",)}),
         ),
     },
-    "appolon1908-hue/beyvra-backend": {
+    "appolon1908/beyvra-backend": {
         # Repository-local contract parsing; no arguments or source drift allowed.
         "scripts/validate_asyncapi.mjs": (
             "ae0983af6c1157476dd94013b56d6c13ed49c06d522fa6035ce16c84fd8a9413",
