@@ -107,7 +107,6 @@ urlpatterns = [
     path("api/v1/treasury/", include("treasury.urls")),
     path("api/v1/institutional/liquidity", InstitutionalLiquidityView.as_view(), name="institutional_liquidity_v1"),
     path("api/v1/operator/treasury/", include("treasury.operator_urls")),
-    # Platform Capabilities & Public Config
     path("api/v1/platform/", include("platform_ops.platform_urls")),
     # Canonical Order Management routes aliased at /api/v1/
     path("api/v1/", include("apps.trading.api.urls")),
