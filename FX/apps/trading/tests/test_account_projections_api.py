@@ -49,7 +49,7 @@ class AccountProjectionsApiTests(TestCase):
             subject_ref=str(self.user.pk),
             account_ref=f"sim:{self.user.pk}",
             total_balance=10000,
-            pending_balance=1500
+            pending_balance=500
         )
         SimulatedReservation.objects.create(
             account=self.account,
@@ -67,15 +67,17 @@ class AccountProjectionsApiTests(TestCase):
         self.assertEqual(data["currency"], "USD")
         self.assertEqual(data["cash"], "10000.000000000000000000")
         self.assertEqual(data["reserved_cash"], "1500.000000000000000000")
-        self.assertEqual(data["available_cash"], "8500.000000000000000000")
-        self.assertEqual(data["buying_power"], "8500.000000000000000000")
+        self.assertEqual(data["available_cash"], "8000.000000000000000000")
+        self.assertEqual(data["buying_power"], "8000.000000000000000000")
+        self.assertEqual(data["settled_cash"], "9500.000000000000000000")
+        self.assertEqual(data["unsettled_cash"], "500.000000000000000000")
         self.assertEqual(data["quality"], "COMPLETE")
 
     def test_get_account_buying_power_projection(self):
         res = self.client.get(f"/api/v1/accounts/{self.account.id}/buying-power", **self.headers)
         self.assertEqual(res.status_code, 200)
         data = res.json()
-        self.assertEqual(data["buying_power"], "8500.000000000000000000")
+        self.assertEqual(data["buying_power"], "8000.000000000000000000")
 
     def test_get_account_transactions_projection_uses_trade_authority_fields(self):
         trade = Trade.objects.create(
