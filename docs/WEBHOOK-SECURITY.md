@@ -1,39 +1,42 @@
-# Webhook Security Specification
+# Provider webhook security and processing boundary
 
-## Security Controls & Ingestion Pipeline
+`FX/financial_boundary/canonical_webhook_views.py` exposes the canonical execution
+webhook route. It checks the provider allowlist, one-MiB body bound, configured
+secret of at least 32 bytes, provider/event identity, timestamp and HMAC before
+constructing a financial envelope. `financial_boundary.webhooks` owns verification.
 
-All external provider webhooks (executions, market-data, custody) must pass through standard pipeline controls:
+The signature is HMAC-SHA256 over
+`timestamp.event_id.provider_id.raw_body`, compared with `hmac.compare_digest`.
+The timestamp window is inclusive: `abs(now - timestamp) <= 300` seconds. A valid
+signature does not authorize an arbitrary provider, event shape or domain effect.
 
-```
-Provider Webhook Request
-         │
-         ▼
-┌─────────────────────────┐
-│ 1. Body Size (< 1MB)    │
-│ 2. Provider Allowlist   │
-│ 3. HMAC-SHA256 Signature│
-│ 4. Replay Window (<300s)│
-└───────────┬─────────────┘
-            ▼
-┌─────────────────────────┐   Duplicate   ┌───────────────────────────┐
-│ Durable Inbox Check     ├──────────────►│ Return 200 OK (No Action) │
-│ UNIQUE(provider, ext_id)│               └───────────────────────────┘
-└───────────┬─────────────┘
-            ▼ New Event
-┌─────────────────────────┐
-│ Return 202 Accepted     │
-└───────────┬─────────────┘
-            ▼
-┌─────────────────────────────────────────┐
-│ Asynchronous Worker Processing          │
-│ ├── Apply to Canonical Domain Model     │
-│ ├── Write Immutable Events              │
-│ ├── Transactional Outbox Publish        │
-│ └── Mark Processed in Inbox             │
-└─────────────────────────────────────────┘
-```
+## Current response behavior
 
-## Replay Attack Protection
-1. `X-Timestamp`: Checked against system clock (`abs(now - timestamp) <= 300` seconds).
-2. `X-Signature`: HMAC SHA-256 computed over `timestamp.event_id.provider_id.raw_body` using constant-time comparison `hmac.compare_digest`.
-3. `Durable Inbox Deduplication`: Primary key / unique constraint on `(provider, provider_event_id)` ensures idempotent processing.
+| Condition | Response | Domain processing |
+|---|---|---|
+| Disallowed provider | 403 `PROVIDER_DISALLOWED` | None |
+| Body exceeds one MiB | 413 `PAYLOAD_TOO_LARGE` | None |
+| Missing/short configured authority secret | 503 `WEBHOOK_AUTHORITY_UNAVAILABLE` | None |
+| Invalid signature, replay timestamp or envelope | 401 `INVALID_WEBHOOK` | None |
+| Authenticated, valid event with no bound canonical handler | 503 `WEBHOOK_PROCESSING_UNAVAILABLE` | None; no consumed marker |
+
+The current route does not return 202 or 200-duplicate. It has no bound execution
+handler or durable canonical inbox worker; a no-op handler would lose a real event.
+Providers must retain retry eligibility. Do not suppress retries based on the
+old fabricated accepted/duplicate response, and do not switch providers or invent
+a new event identity to retry.
+
+## Durable processing requirement
+
+`financial_boundary.eventing.consume_financial_event` can atomically record the
+`ProcessedEvent` marker and invoke a real handler. Its unique event UUID binds the
+tenant, event type and payload hash; a conflicting replay raises
+`EventReplayConflict`. Provider event UUIDs are derived from provider and event
+identity. This is not a `(provider, external_id)` inbox table, and the function
+is not yet bound to this route's execution effects.
+
+Before enabling acknowledgments, bind and test the real tenant/account routing,
+domain handler, durable processing/inbox policy, rollback behavior and duplicate
+conflict handling. Only acknowledge after the declared durability boundary; no
+accepted event may be discarded, and failures must remain retryable without
+repeat domain effects. No provider or production activation is authorized here.
