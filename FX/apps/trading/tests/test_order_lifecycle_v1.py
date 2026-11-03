@@ -2,7 +2,7 @@ import uuid
 from decimal import Decimal
 from django.test import TestCase, override_settings
 from rest_framework.test import APIClient
-from apps.trading.models import TradingOrder, SimulatedTrade
+from apps.trading.models import TradingOrder, SimulatedTrade, SimulatedReservation
 from apps.trading.domain.orders import OrderState
 from apps.trading.application.simulation import process_created_order
 from apps.foundation.models import OutboxEvent
@@ -103,7 +103,12 @@ class OrderLifecycleV1ApiTests(TestCase):
             **self.headers
         )
         self.assertEqual(res_cancel.status_code, 200)
-        self.assertEqual(res_cancel.json()["status"], OrderState.CANCELLED.value)
+        self.assertEqual(res_cancel.json()["status"], OrderState.CANCELED.value)
+        order = TradingOrder.objects.get(pk=order_id)
+        self.assertEqual(order.state, OrderState.CANCELLED.value)
+        reservation = SimulatedReservation.objects.get(pk=order.reservation_id)
+        self.assertEqual(reservation.state, SimulatedReservation.State.RELEASED)
+        self.assertEqual(reservation.remaining_amount, Decimal("0"))
 
     def test_executions_endpoint(self):
         res_exec = self.client.get("/api/v1/executions", **self.headers)
