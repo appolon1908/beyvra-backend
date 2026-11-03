@@ -41,8 +41,7 @@ MIDDLEWARE_RELEASE_VALIDATOR_SECURITY_SHA256 = (
     "8d8f21260babfae5eaedbdd46472b1ec"
 )
 BACKEND_RELEASE_VALIDATOR_SECURITY_SHA256 = (
-    "15dbaa6d571a1d1e72c09ca417cc9419"
-    "8d8f21260babfae5eaedbdd46472b1ec"
+    "a1e7314d037d6f8921ef4fc21577d9a87b7c26c864b0d7dc56503130b9052f6d"
 )
 MONEYBEE_RELEASE_VALIDATOR_SECURITY_SHA256 = (
     "15dbaa6d571a1d1e72c09ca417cc9419"
@@ -559,8 +558,8 @@ APPROVED_COMPLEX_SCRIPT_SHA256: dict[str, dict[str, str]] = {
         "FX/release-init-prod.sh": "cef5fadd788f5ae5c9ba28a857bfe516e47b671e36aafcf3817b4c20b9e5115b",
         "operations/verify_release_identity.py": "8aadfc14fa376ba46483216c6323d589d4603c71d42f5a77c29286edb5b5cf0a",
         "scripts/certify_staging_api.py": (
-            "a154c1bcd011c42442263d06b530e243"
-            "901ec8487c6b34f032e53810f12a5a30"
+            "f2233c960af5a92160278b76a398de2d"
+            "9586f9a74a76c786c8bad58f8080c127"
         ),
     },
     "appolon1908-hue/scrapper": {
@@ -699,7 +698,7 @@ APPROVED_CONTROL_PLANE_WORKFLOW_SHA256: dict[str, dict[str, str]] = {
         ),
     },
     "appolon1908-hue/beyvra-backend": {
-        ".github/workflows/ci.yml": "fffbdd8b7aad8b2679bcc608f0b487bf976c033a07786a0af5262d893867211a",
+        ".github/workflows/ci.yml": "1b5f10691f3f3e35f51fc5f353f0d126bd8ec53225951c20c6b44b55634196bc",
     },
     "appolon1908-hue/beyvra-frontend": {
         ".github/workflows/ci.yml": "7459a31c6b005e9345661b10ee8df45a570ac652280a2eacbcdfd4673fb115da",
@@ -745,7 +744,7 @@ APPROVED_JOB_EXECUTABLE_CONFIGURATION_SHA256: dict[str, dict[str, str]] = {
     },
     "appolon1908-hue/beyvra-backend": {
         ".github/workflows/email-boundary-ci.yml": "13ec97e8fb3cf77dcea400c2c8d4d5f089a567852ebcfa7f8efc581efa6f1fd6",
-        ".github/workflows/enterprise-api.yml": "0d41ab216db01c92761c261f303ddc949b7eba43d4c7d323144028089e9ac99d",
+        ".github/workflows/enterprise-api.yml": "3abb88d703e44904cd921999fec59bfd8a81374383e1f8a742362a0bd41ed8cb",
         ".github/workflows/registration-safety-ci.yml": "8359be31987dbfc7b3d570ce12201fd0e94a21c71c8dec303052ef44a87fb25c",
         ".github/workflows/security-command-ci.yml": "a47a0f78eb38348b2c23e784e9048b1311297ffe30080c4b063048b296e66d41",
         ".github/workflows/workspace-api.yml": "abf3d41bfe718ecd343cd540ea27cd330c16294b192a7aa37f0435b895cc90b5",
@@ -889,6 +888,11 @@ APPROVED_READ_ONLY_SCRIPT_INVOCATIONS: dict[
         ),
     },
     "appolon1908-hue/beyvra-backend": {
+        # Repository-local contract parsing; no arguments or source drift allowed.
+        "scripts/validate_asyncapi.mjs": (
+            "ae0983af6c1157476dd94013b56d6c13ed49c06d522fa6035ce16c84fd8a9413",
+            frozenset({()}),
+        ),
         "operations/one_click_readonly_release.py": (
             "66f853c64b440615179cddb3a67ad027017fec0d17d5ed56178ec5b2ce9173ba",
             frozenset({("--self-test",)}),

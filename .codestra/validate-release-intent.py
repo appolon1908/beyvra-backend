@@ -179,7 +179,7 @@ EXPECTED_CHECK_WORKFLOW_SHA256 = {
     },
     "appolon1908-hue/beyvra-backend": {
         ".github/workflows/production-orchestrator-contract.yml": ORCHESTRATOR_CONTRACT_WORKFLOW_SHA256,
-        ".github/workflows/ci.yml": "1c2e654ffd1011f662985d261411502c392789b882b6d089ba18e182e53248d1",
+        ".github/workflows/ci.yml": "1b5f10691f3f3e35f51fc5f353f0d126bd8ec53225951c20c6b44b55634196bc",
     },
     "appolon1908-hue/backend2": {
         ".github/workflows/production-orchestrator-contract.yml": ORCHESTRATOR_CONTRACT_WORKFLOW_SHA256,
@@ -225,8 +225,7 @@ MIDDLEWARE_PRODUCTION_VALIDATOR_SHA256 = (
     "83d2fce102104543b871530f11115f20"
 )
 BACKEND_PRODUCTION_VALIDATOR_SHA256 = (
-    "6006bbc7850ce7666de926b6cad2585b"
-    "83d2fce102104543b871530f11115f20"
+    "f6b9b37bc13cff07eb6b844aedf46c3fdb23f1eedaa11c71e6d5e1a6cd154dbf"
 )
 EXPECTED_CHECK_WORKFLOW_EXECUTABLE_SHA256 = {
     "appolon1908-hue/Infustruction-repo": {
@@ -390,8 +389,7 @@ EXPECTED_REQUIRED_CHECK_SOURCE_CLOSURE_SHA256 = {
         "ec4a75460ed8648186445f1e8793b016"
     ),
     "appolon1908-hue/beyvra-backend": (
-        "8a3a6eb731ece61cc83f8e0333689f70"
-        "87be9db4f7e93698a37f860fdd453135"
+        "dafeceb4ecbc99322089e45ecfa4761ab43f322c2c32a37c272a4780810201e7"
     ),
     "appolon1908-hue/backend2": (
         "fa191e95756aec0a8987425eb697eb8e"
