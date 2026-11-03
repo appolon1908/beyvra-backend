@@ -16,7 +16,7 @@ REQUIREMENTS = Path(__file__).resolve().parents[2] / "requirements.txt"
 class TradingJwtDependencySecurityTests(unittest.TestCase):
     def test_pinned_jwt_and_http_dependencies_are_patched(self) -> None:
         lines = set(REQUIREMENTS.read_text(encoding="utf-8").splitlines())
-        self.assertIn("PyJWT[crypto]==2.15.0", lines)
+        self.assertIn("PyJWT[crypto]==2.15.1", lines)
         self.assertIn("urllib3==2.8.0", lines)
         self.assertFalse(any(line == "PyJWT[crypto]==2.13.0" for line in lines))
         self.assertFalse(any(line == "urllib3==2.7.0" for line in lines))
