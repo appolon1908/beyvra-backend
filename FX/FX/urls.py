@@ -99,7 +99,6 @@ urlpatterns = [
     path("api/v1/treasury/", include("treasury.urls")),
     path("api/v1/institutional/liquidity", InstitutionalLiquidityView.as_view(), name="institutional_liquidity_v1"),
     path("api/v1/operator/treasury/", include("treasury.operator_urls")),
-    # Platform Capabilities & Public Config
     path("api/v1/platform/", include("platform_ops.platform_urls")),
     path("api/v1/system/", include("platform_ops.public_urls")),
     path("api/v1/operator/system/", include("platform_ops.operator_urls")),
