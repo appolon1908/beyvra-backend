@@ -36,7 +36,7 @@ account, market snapshot, realtime ticket/resume, or provider webhook milestones
 
 Platform regression entry point: `FX/platform_ops/tests/test_platform_capabilities_api.py`.
 Related suites live under `FX/apps/trading/tests/`, `FX/financial_boundary/tests/`,
-`FX/apps/compliance/tests/`, and `FX/apps/valuation/`.
+`FX/apps/compliance/tests.py`, and `FX/apps/valuation/`.
 
 Production and staging activation remain unauthorized. Keep existing safety defaults,
 authentication, authorization, migration checks, security scans, and release gates.
