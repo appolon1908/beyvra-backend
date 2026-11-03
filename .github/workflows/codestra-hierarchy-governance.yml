@@ -41,7 +41,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "${{ needs.hierarchy-governance.result }}" = "success"
+          echo "::error::EXTERNAL_CERTIFICATION_REQUIRED: hierarchy source validation cannot issue controller certification."
+          exit 1
 
   codestra-slash-control-plane:
     name: codestra/control-plane
@@ -53,4 +54,5 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "${{ needs.hierarchy-governance.result }}" = "success"
+          echo "::error::EXTERNAL_CERTIFICATION_REQUIRED: hierarchy source validation cannot issue controller certification."
+          exit 1

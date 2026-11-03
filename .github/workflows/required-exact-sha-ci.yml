@@ -6,13 +6,12 @@ on:
   workflow_dispatch:
     inputs:
       target_sha:
-        description: Full repository commit SHA to certify
+        description: Full repository commit SHA to validate (source-only)
         required: true
         type: string
 
 permissions:
   contents: read
-  statuses: write
 
 concurrency:
   group: required-exact-sha-${{ github.event_name == 'workflow_dispatch' && inputs.target_sha || github.event.pull_request.head.sha }}
@@ -20,7 +19,7 @@ concurrency:
 
 jobs:
   exact-sha:
-    name: Test exact repository SHA
+    name: Validate exact repository source SHA
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: [self-hosted, Linux, X64, codestra-ci, codestra-beyvra-backend]
     timeout-minutes: 30
@@ -78,6 +77,9 @@ jobs:
           evidence="$RUNNER_TEMP/exact-sha-evidence.txt"
           umask 077
           {
+            echo "scope=SOURCE_ONLY"
+            echo "runtime_certified=false"
+            echo "production_activation_authorized=false"
             echo "repository=${GITHUB_REPOSITORY}"
             echo "sha=$(git rev-parse HEAD)"
             echo "runner=${RUNNER_NAME}"
@@ -94,15 +96,16 @@ jobs:
           retention-days: 14
 
 
-      - name: Publish target-SHA certification status
-        if: ${{ success() }}
+      - name: Run committed source contract regressions
         shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          gh api -X POST "repos/${GITHUB_REPOSITORY}/statuses/${EXPECTED_SHA}" \
-            -f state=success \
-            -f context="required-exact-sha/target" \
-            -f description="Exact-SHA certification passed" \
-            -f target_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          PYTHONPATH=scripts python3 -m unittest discover -s scripts -p 'test_*.py'
+
+      - name: Require independent target-SHA certification
+        if: ${{ success() }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "::error::EXTERNAL_CERTIFICATION_REQUIRED: source checkout, integrity checks and unit tests do not grant controller or runtime certification."
+          exit 1
