@@ -11,7 +11,7 @@ orchestrator catalog or promotion rules.
 
 Exactly two pinned runtime dependencies change in `FX/requirements.txt`:
 
-- `PyJWT[crypto]==2.15.0` (previously 2.13.0; fixes reported token-signing,
+- `PyJWT[crypto]==2.15.1` (previously 2.13.0; fixes reported token-signing,
   JWKS, and algorithm-confusion vulnerabilities).
 - `urllib3==2.8.0` (previously 2.7.0; fixes reported HTTPS proxy and chunk
   parser vulnerabilities).
