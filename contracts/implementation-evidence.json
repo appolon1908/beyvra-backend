@@ -46,7 +46,7 @@
           "sha256": "57950ccde1b83bdcf68d00a10631dbd37e51c4caf9639a0e8f85e943f5b3cd9e"
         }
       },
-      "verification": "Source bindings refreshed for the repaired revision; source and unit checks do not establish PostgreSQL concurrency, provider integration, or production acceptance."
+      "verification": "Historical PostgreSQL evidence requires revalidation on this source revision; new no-database input safety tests do not establish database or concurrency acceptance."
     },
     "createWatchlist": {
       "method": "POST",
@@ -93,7 +93,7 @@
           "sha256": "57950ccde1b83bdcf68d00a10631dbd37e51c4caf9639a0e8f85e943f5b3cd9e"
         }
       },
-      "verification": "Source bindings refreshed for the repaired revision; source and unit checks do not establish PostgreSQL concurrency, provider integration, or production acceptance."
+      "verification": "Historical PostgreSQL evidence requires revalidation on this source revision; new no-database input safety tests do not establish database or concurrency acceptance."
     },
     "getWatchlist": {
       "method": "GET",
@@ -140,7 +140,7 @@
           "sha256": "57950ccde1b83bdcf68d00a10631dbd37e51c4caf9639a0e8f85e943f5b3cd9e"
         }
       },
-      "verification": "Source bindings refreshed for the repaired revision; source and unit checks do not establish PostgreSQL concurrency, provider integration, or production acceptance."
+      "verification": "Historical PostgreSQL evidence requires revalidation on this source revision; new no-database input safety tests do not establish database or concurrency acceptance."
     },
     "renameWatchlist": {
       "method": "PATCH",
@@ -187,7 +187,7 @@
           "sha256": "57950ccde1b83bdcf68d00a10631dbd37e51c4caf9639a0e8f85e943f5b3cd9e"
         }
       },
-      "verification": "Source bindings refreshed for the repaired revision; source and unit checks do not establish PostgreSQL concurrency, provider integration, or production acceptance."
+      "verification": "Historical PostgreSQL evidence requires revalidation on this source revision; new no-database input safety tests do not establish database or concurrency acceptance."
     },
     "deleteWatchlist": {
       "method": "DELETE",
@@ -234,7 +234,7 @@
           "sha256": "57950ccde1b83bdcf68d00a10631dbd37e51c4caf9639a0e8f85e943f5b3cd9e"
         }
       },
-      "verification": "Source bindings refreshed for the repaired revision; source and unit checks do not establish PostgreSQL concurrency, provider integration, or production acceptance."
+      "verification": "Historical PostgreSQL evidence requires revalidation on this source revision; new no-database input safety tests do not establish database or concurrency acceptance."
     },
     "listWatchlistItems": {
       "method": "GET",
@@ -281,7 +281,7 @@
           "sha256": "57950ccde1b83bdcf68d00a10631dbd37e51c4caf9639a0e8f85e943f5b3cd9e"
         }
       },
-      "verification": "Source bindings refreshed for the repaired revision; source and unit checks do not establish PostgreSQL concurrency, provider integration, or production acceptance."
+      "verification": "Historical PostgreSQL evidence requires revalidation on this source revision; new no-database input safety tests do not establish database or concurrency acceptance."
     },
     "addWatchlistItem": {
       "method": "POST",
@@ -328,7 +328,7 @@
           "sha256": "57950ccde1b83bdcf68d00a10631dbd37e51c4caf9639a0e8f85e943f5b3cd9e"
         }
       },
-      "verification": "Source bindings refreshed for the repaired revision; source and unit checks do not establish PostgreSQL concurrency, provider integration, or production acceptance."
+      "verification": "Historical PostgreSQL evidence requires revalidation on this source revision; new no-database input safety tests do not establish database or concurrency acceptance."
     },
     "deleteWatchlistItem": {
       "method": "DELETE",
@@ -375,7 +375,7 @@
           "sha256": "57950ccde1b83bdcf68d00a10631dbd37e51c4caf9639a0e8f85e943f5b3cd9e"
         }
       },
-      "verification": "Source bindings refreshed for the repaired revision; source and unit checks do not establish PostgreSQL concurrency, provider integration, or production acceptance."
+      "verification": "Historical PostgreSQL evidence requires revalidation on this source revision; new no-database input safety tests do not establish database or concurrency acceptance."
     }
   }
 }
