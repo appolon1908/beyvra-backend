@@ -41,7 +41,7 @@ MIDDLEWARE_RELEASE_VALIDATOR_SECURITY_SHA256 = (
     "8d8f21260babfae5eaedbdd46472b1ec"
 )
 BACKEND_RELEASE_VALIDATOR_SECURITY_SHA256 = (
-    '0195cfc94f66ada743a3000eb1ba1f79fbd3f7c11edbe762ffbb49f9b6b3086a'
+    '846c50c9ae1d32b54b2e71057ca12328252cc744d6b2567e3536f7277ea78621'
 )
 MONEYBEE_RELEASE_VALIDATOR_SECURITY_SHA256 = (
     "15dbaa6d571a1d1e72c09ca417cc9419"
@@ -698,7 +698,7 @@ APPROVED_CONTROL_PLANE_WORKFLOW_SHA256: dict[str, dict[str, str]] = {
         ),
     },
     "appolon1908/beyvra-backend": {
-        ".github/workflows/ci.yml": "1b5f10691f3f3e35f51fc5f353f0d126bd8ec53225951c20c6b44b55634196bc",
+        ".github/workflows/ci.yml": '44bfefc7fa735f2e2b2fdddcd0a14f486986ad0f031064089583470b787f3433',
     },
     "appolon1908-hue/beyvra-frontend": {
         ".github/workflows/ci.yml": "7459a31c6b005e9345661b10ee8df45a570ac652280a2eacbcdfd4673fb115da",
