@@ -1,12 +1,28 @@
 import ast, importlib.util, json, logging, pathlib, re, unittest
+from tempfile import TemporaryDirectory
+from unittest.mock import patch
+
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 
 class ObservabilityAssetTests(unittest.TestCase):
     def test_dashboards_are_valid_json_without_secrets(self):
-        files=[p for d in ("monitoring/grafana","observability/grafana") for p in (ROOT/d).rglob("*.json")]; self.assertGreaterEqual(len(files),10)
+        files = sorted(
+            path
+            for directory in ("monitoring/grafana", "observability/grafana")
+            for path in (ROOT / directory).rglob("*")
+            if path.is_file() and path.suffix.lower() == ".json"
+        )
+        self.assertGreaterEqual(len(files), 10)
         for path in files:
-            data=json.loads(path.read_text()); self.assertTrue(data["title"]); self.assertTrue(data["panels"])
-            text=path.read_text().lower(); self.assertNotRegex(text,r"password|api[_-]?key|authorization|jwt|private[_-]?key")
+            with self.subTest(path=path.relative_to(ROOT)):
+                data = json.loads(path.read_text(encoding="utf-8"))
+                self.assertTrue(data["title"])
+                self.assertTrue(data["panels"])
+                # Scan decoded keys and values, including JSON unicode escapes.
+                text = json.dumps(data, ensure_ascii=False).lower()
+                self.assertNotRegex(
+                    text, r"password|api[_-]?key|authorization|jwt|private[_-]?key"
+                )
     def test_metric_names_are_canonical_and_labels_bounded(self):
         text=(ROOT/"FX/apps/foundation/observability.py").read_text()
         names=set(re.findall(r'["\'](beyvra_[a-z0-9_]+)["\']',text)); self.assertGreaterEqual(len(names),45)
@@ -36,5 +52,100 @@ class ObservabilityAssetTests(unittest.TestCase):
         path=ROOT/"FX/fx_utils/json_logging.py"; spec=importlib.util.spec_from_file_location("json_logging",path); module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
         record=logging.LogRecord("test",logging.INFO,"",0,"token=supersecret event ok",(),None); data=json.loads(module.JsonFormatter().format(record))
         self.assertNotIn("supersecret",json.dumps(data)); self.assertEqual(data["service"],"beyvra-backend"); self.assertIn("environment",data); self.assertIn("simulation",data)
+
+
+class DashboardScanRegressionTests(unittest.TestCase):
+    def _write_valid_dashboards(self, root):
+        directory = root / "monitoring/grafana"
+        directory.mkdir(parents=True)
+        for index in range(5):
+            (directory / f"beyvra-{index}.json").write_text(
+                json.dumps({"title": f"Dashboard {index}", "panels": [{"id": 1}]}),
+                encoding="utf-8",
+            )
+        other = root / "observability/grafana"
+        other.mkdir(parents=True)
+        for index in range(5):
+            (other / f"other-{index}.json").write_text(
+                json.dumps({"title": f"Other {index}", "panels": [{"id": 1}]}),
+                encoding="utf-8",
+            )
+        return directory
+
+    def _scan(self, root):
+        with patch(__name__ + ".ROOT", root):
+            ObservabilityAssetTests(
+                "test_dashboards_are_valid_json_without_secrets"
+            ).test_dashboards_are_valid_json_without_secrets()
+
+    def test_additional_dashboard_name_and_uppercase_suffix_are_scanned(self):
+        with TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            directory = self._write_valid_dashboards(root)
+            (directory / "operator.JSON").write_text(
+                '{"title": "operator", "panels": [{"password": "fixture"}]}',
+                encoding="utf-8",
+            )
+            with self.assertRaises(AssertionError):
+                self._scan(root)
+
+    def test_escaped_secret_key_is_detected_after_json_decoding(self):
+        with TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            directory = self._write_valid_dashboards(root)
+            (directory / "beyvra-escaped.json").write_text(
+                r'{"title": "operator", "panels": [{"api\u005fkey": "fixture"}]}',
+                encoding="utf-8",
+            )
+            with self.assertRaises(AssertionError):
+                self._scan(root)
+
+    def test_escaped_secret_value_is_detected_after_json_decoding(self):
+        with TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            directory = self._write_valid_dashboards(root)
+            (directory / "beyvra-escaped.json").write_text(
+                r'{"title": "operator", "panels": [{"expr": "api\u002dkey=fixture"}]}',
+                encoding="utf-8",
+            )
+            with self.assertRaises(AssertionError):
+                self._scan(root)
+
+    def test_additional_clean_dashboards_do_not_disable_existing_checks(self):
+        with TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            directory = self._write_valid_dashboards(root)
+            (directory / "operator.JSON").write_text(
+                '{"title": "operator", "panels": [{"id": 1}]}',
+                encoding="utf-8",
+            )
+            self._scan(root)
+
+    def test_nested_dashboard_in_either_root_is_scanned(self):
+        for directory_name in ("monitoring/grafana", "observability/grafana"):
+            with self.subTest(directory=directory_name), TemporaryDirectory() as temporary:
+                root = pathlib.Path(temporary)
+                self._write_valid_dashboards(root)
+                nested = root / directory_name / "nested"
+                nested.mkdir()
+                (nested / "operator.JSON").write_text(
+                    r'{"title": "nested", "panels": [{"private\u005fkey": "fixture"}]}',
+                    encoding="utf-8",
+                )
+                with self.assertRaises(AssertionError):
+                    self._scan(root)
+
+    def test_clean_nested_dashboards_in_both_roots_are_accepted(self):
+        with TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            self._write_valid_dashboards(root)
+            for directory_name in ("monitoring/grafana", "observability/grafana"):
+                nested = root / directory_name / "nested"
+                nested.mkdir()
+                (nested / "operator.JSON").write_text(
+                    '{"title": "nested", "panels": [{"id": 1}]}',
+                    encoding="utf-8",
+                )
+            self._scan(root)
 
 if __name__=="__main__": unittest.main()
