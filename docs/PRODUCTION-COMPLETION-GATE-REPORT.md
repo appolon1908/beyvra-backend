@@ -1,23 +1,35 @@
-# Production Completion Gate Report
+# Production completion gate report
 
-All 9 canonical domain implementations completed across stacked branches:
-- Base: `68e9df8fcb2f33bad8db0422f76f30818b1b7eea` (PR #56 reviewed head)
-- Head: `4335d9a7b3ca9fd474b3589d77a27f3bac552d91`
+This B10 branch is a source inventory and safety repair, not a completion or
+production certificate. See `BACKEND-PRODUCTION-COMPLETION-MAP.md` for real source
+authorities and `API-IMPLEMENTATION-MATRIX.md` for source-bound operation evidence.
+Historical branch hashes do not certify the current revision.
 
-## Verification Matrix
+## Implemented safety corrections
 
-1. **Safety Boundaries Enforced**:
-   - `LIVE_TRADING_ENABLED=false`
-   - `REAL_MONEY_ENABLED=false`
-   - `DEPOSITS_ENABLED=false`
-   - `WITHDRAWALS_ENABLED=false`
-   - `EXTERNAL_EXECUTION_ENABLED=false`
-   - `CUSTODY_ENABLED=false`
-2. **PostgreSQL / Durable Authority**:
-   - All balance, order, execution, event, and idempotency states reside in PostgreSQL.
-3. **No Financial Calculation in Frontend**:
-   - Projections calculated server-side in `apps.trading.api.account_projections_views`.
-4. **Optimistic Concurrency**:
-   - `If-Match` ETags enforced for workspace reorder mutations.
-5. **HMAC Webhook Ingestion**:
-   - Ingestion pipeline with 300s replay window and durable inbox deduplication.
+- Watchlist reorder requires a version precondition and an exact, unique UUID
+  permutation of the owned current item set. Invalid input cannot increment the
+  list version or partially reorder it; changes share the existing row transaction.
+- Market candle limits and order-book depths must be positive integers (the existing upper clamp is retained);
+  unsupported candle cursors are rejected rather than silently ignored. The finite
+  simulated fixtures do not establish live market-data integration.
+- V1 realtime endpoints retain authentication and return
+  `REALTIME_AUTHORITY_UNAVAILABLE` (503), never a fabricated usable ticket,
+  sequence watermark or empty successful history.
+- Signed provider webhooks are authenticated, but return
+  `WEBHOOK_PROCESSING_UNAVAILABLE` (503) until a durable canonical handler is
+  bound. No event is acknowledged or marked consumed by a no-op callback, so
+  the provider can retry. This is not an implemented execution intake pipeline.
+
+## Evidence and remaining gates
+
+The revision adds database-free request/validation regressions plus PostgreSQL
+watchlist and webhook assertions. The PostgreSQL suites must pass on this exact
+revision; local no-database tests do not prove migration, transaction, concurrency,
+or delivery behavior. Financial projection, provider integration, realtime
+transport/history, frontend wiring, release evidence and staging acceptance all
+retain their own outstanding verification requirements.
+
+Keep existing safety controls, authentication, tenant isolation, financial-service
+boundaries, security checks and release protections. No staging or production
+activation is authorized by this report.
