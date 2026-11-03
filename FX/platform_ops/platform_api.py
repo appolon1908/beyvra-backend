@@ -1,170 +1,217 @@
 import hashlib
 import json
+
+from django.contrib.auth.models import AnonymousUser
 from django.conf import settings
-from django.utils import timezone as django_timezone
+from django.core.serializers.json import DjangoJSONEncoder
+from django.utils import timezone
 from rest_framework import exceptions
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.compliance.domain import EligibilityResult
+from apps.compliance.domain import RequirementType
 from apps.compliance.models import ComplianceProfile
-from apps.compliance.services import get_trading_eligibility
+from apps.compliance.services import POLICY_VERSION, get_trading_eligibility
 from apps.trading.application.simulation import simulation_available
-from integrations.permissions import organization_for_request
+from integrations.permissions import tenant_context_for_request
+from integrations.models import OrganizationMembership
+from operations.authentication import SessionBoundJWTAuthentication
+from platform_ops.health.api import _safety_state
 from platform_ops.health.services import HealthAuthority
+from platform_ops.permissions import SRE_ROLES
+
+_TENANT_SELECTION_REQUIRED = object()
 
 
 def _etag(payload):
-    content_hash = hashlib.sha256(json.dumps(payload, sort_keys=True).encode("utf-8")).hexdigest()
-    return f'"{content_hash}"'
+    stable = {key: value for key, value in payload.items() if key != "as_of"}
+    digest = hashlib.sha256(
+        json.dumps(
+            stable,
+            sort_keys=True,
+            cls=DjangoJSONEncoder,
+        ).encode("utf-8")
+    ).hexdigest()
+    return f'"{digest}"'
 
 
-def _reason_requirements(reason_codes):
-    requirements = []
-    if any(code.startswith("KYC_") for code in reason_codes):
-        requirements.append("IDENTITY_VERIFICATION")
-    if any(code.startswith("AML_") for code in reason_codes):
-        requirements.append("MANUAL_REVIEW")
-    if any(code.startswith("SANCTIONS_") for code in reason_codes):
-        requirements.append("MANUAL_REVIEW")
-    if "JURISDICTION_RESTRICTED" in reason_codes:
-        requirements.append("ADDRESS_VERIFICATION")
-    return requirements
+def _cached_response(payload, request):
+    etag = _etag(payload)
+    if request.headers.get("If-None-Match") == etag:
+        response = Response(status=304)
+    else:
+        response = Response(payload)
+    response["ETag"] = etag
+    response["Cache-Control"] = "private, no-store"
+    response["Pragma"] = "no-cache"
+    return response
 
 
-def _compliance_summary_for_request(request):
+def _product_mode(safety):
+    return (
+        "HYBRID"
+        if (
+            safety["live_trading_enabled"]
+            or safety["real_trading_enabled"]
+            or safety["external_execution_enabled"]
+        )
+        else "SIMULATION_ONLY"
+    )
+
+
+def _provider_health_visible(user):
+    if not getattr(user, "is_authenticated", False):
+        return False
+    return bool(
+        user.is_superuser
+        or OrganizationMembership.objects.filter(
+            user=user,
+            role__in=SRE_ROLES,
+            is_active=True,
+            organization__is_active=True,
+        ).exists()
+    )
+
+
+def _optional_user(request):
+    try:
+        authenticated = SessionBoundJWTAuthentication().authenticate(request)
+    except (AuthenticationFailed, exceptions.PermissionDenied):
+        return AnonymousUser()
+    if authenticated is None:
+        return AnonymousUser()
+    user, _token = authenticated
+    return user
+
+
+def _request_with_user(request, user):
+    proxy = type("PlatformRequestProxy", (), {})()
+    proxy.user = user
+    proxy.headers = request.headers
+    proxy.service_token = getattr(request, "service_token", None)
+    return proxy
+
+
+def _compliance_summary(request, user):
     summary = {
         "trading_eligible": False,
-        "policy_version": "2026.08.v1",
+        "policy_version": POLICY_VERSION,
         "reason_codes": [],
         "requirements": [],
     }
-    if not request.user.is_authenticated:
+    if not getattr(user, "is_authenticated", False):
         return summary
-    try:
-        organization = organization_for_request(request)
-    except exceptions.APIException as exc:
-        detail = exc.detail
-        if isinstance(detail, dict) and detail.get("code"):
-            summary["reason_codes"] = [str(detail["code"])]
-        else:
-            summary["reason_codes"] = ["ORGANIZATION_CONTEXT_REQUIRED"]
+    organization = _resolve_compliance_organization(request, user)
+    if organization is _TENANT_SELECTION_REQUIRED:
+        summary["reason_codes"] = ["TENANT_SELECTION_REQUIRED"]
         return summary
-
-    profile = ComplianceProfile.objects.filter(user_id=request.user.pk, organization=organization).first()
-    if not profile:
+    if organization is None:
         summary["reason_codes"] = ["KYC_REQUIRED"]
-        summary["requirements"] = ["IDENTITY_VERIFICATION"]
+        summary["requirements"] = [RequirementType.IDENTITY_VERIFICATION.value]
         return summary
-
+    profile = ComplianceProfile.objects.filter(
+        user=user,
+        organization=organization,
+    ).first()
+    if profile is None:
+        summary["reason_codes"] = ["KYC_REQUIRED"]
+        summary["requirements"] = [RequirementType.IDENTITY_VERIFICATION.value]
+        return summary
     decision = get_trading_eligibility(profile, persist=False)
-    summary["trading_eligible"] = decision.result == EligibilityResult.ALLOWED
+    summary["trading_eligible"] = decision.result == "ALLOWED"
     summary["policy_version"] = decision.policy_version
     summary["reason_codes"] = list(decision.reason_codes)
-    summary["requirements"] = _reason_requirements(summary["reason_codes"])
+    summary["requirements"] = list(
+        profile.requirements.filter(required=True)
+        .exclude(status__in=("COMPLETED", "WAIVED"))
+        .values_list("type", flat=True)
+    )
     return summary
 
 
+def _resolve_compliance_organization(request, user):
+    if not getattr(user, "is_authenticated", False):
+        return None
+    proxy = _request_with_user(request, user)
+    try:
+        return tenant_context_for_request(proxy).organization
+    except exceptions.ValidationError:
+        return _TENANT_SELECTION_REQUIRED
+    except exceptions.PermissionDenied:
+        if request.headers.get("X-Organization-ID"):
+            raise
+        return None
+
+
 class PlatformConfigView(APIView):
-    """
-    GET /api/v1/platform/config
-    Public platform configuration and runtime profile.
-    """
+    authentication_classes = ()
     permission_classes = (AllowAny,)
 
     def get(self, request):
-        config_data = {
+        safety = _safety_state()
+        payload = {
             "schema_version": "1.0",
             "environment": getattr(settings, "DEPLOYMENT_ENV", "staging"),
-            "product_mode": "SIMULATION_ONLY" if not getattr(settings, "REAL_TRADING_ENABLED", False) else "HYBRID",
+            "product_mode": _product_mode(safety),
             "simulation_enabled": simulation_available(),
-            "live_trading_enabled": False,
-            "real_money_enabled": False,
-            "external_execution_enabled": False,
-            "custody_enabled": False,
+            "live_trading_enabled": safety["live_trading_enabled"],
+            "real_money_enabled": safety["real_money_enabled"],
+            "external_execution_enabled": safety["external_execution_enabled"],
+            "custody_enabled": bool(
+                getattr(settings, "CUSTODY_ENABLED", False)
+            ),
             "api_version": "v1",
             "supported_versions": ["v1"],
+            "as_of": timezone.now().isoformat(),
         }
-        etag = _etag(config_data)
-
-        if request.headers.get("If-None-Match") == etag:
-            return Response(status=304)
-
-        response = Response({
-            **config_data,
-            "as_of": django_timezone.now().isoformat(),
-        })
-        response["ETag"] = etag
-        response["Cache-Control"] = "private, no-store"
-        response["Pragma"] = "no-cache"
-        return response
+        return _cached_response(payload, request)
 
 
 class PlatformCapabilitiesView(APIView):
-    """
-    GET /api/v1/platform/capabilities
-    Evaluates dynamic tenant capabilities, operational state, compliance and features.
-    """
+    authentication_classes = ()
     permission_classes = (AllowAny,)
 
     def get(self, request):
+        safety = _safety_state()
         system_state = HealthAuthority.system_state()
-        is_maintenance = system_state == "UNHEALTHY"
-        is_degraded = system_state == "DEGRADED"
-
-        compliance_summary = _compliance_summary_for_request(request)
-
-        # Hide internal provider details from non-operators
-        is_operator = request.user.is_authenticated and (request.user.is_staff or request.user.is_superuser)
-
-        provider_health = None
-        if is_operator:
-            provider_health = {
-                "execution_broker": "OPERATIONAL",
-                "market_data_feed": "OPERATIONAL",
-                "banking_rail": "OPERATIONAL"
-            }
-
-        capabilities_data = {
+        user = _optional_user(request)
+        provider_health_visible = _provider_health_visible(user)
+        payload = {
             "schema_version": "1.0",
             "environment": getattr(settings, "DEPLOYMENT_ENV", "staging"),
-            "product_mode": "SIMULATION_ONLY",
-            "simulation_enabled": simulation_available() and not is_maintenance,
-            "live_trading_enabled": False,
-            "real_money_enabled": False,
-            "maintenance_mode": is_maintenance,
-            "degraded_mode": is_degraded,
-            "degraded_reasons": ["SYSTEM_STATE_DEGRADED"] if is_degraded else [],
+            "product_mode": _product_mode(safety),
+            "simulation_enabled": simulation_available()
+            and system_state != "UNHEALTHY",
+            "live_trading_enabled": safety["live_trading_enabled"],
+            "real_money_enabled": safety["real_money_enabled"],
+            "maintenance_mode": system_state == "UNHEALTHY",
+            "degraded_mode": system_state == "DEGRADED",
+            "degraded_reasons": (
+                ["SYSTEM_STATE_DEGRADED"]
+                if system_state == "DEGRADED"
+                else []
+            ),
             "supported_asset_classes": ["EQUITY", "CRYPTO"],
             "supported_order_types": ["MARKET", "LIMIT"],
             "supported_time_in_force": ["DAY", "GTC"],
             "market_data_intervals": ["1m", "5m", "15m", "1h", "1d"],
             "deposits": {
                 "available": False,
-                "reason_code": "FEATURE_DISABLED"
+                "reason_code": "FEATURE_DISABLED",
             },
             "withdrawals": {
                 "available": False,
-                "reason_code": "FEATURE_DISABLED"
+                "reason_code": "FEATURE_DISABLED",
             },
-            "provider_health_visible": is_operator,
-            "compliance": compliance_summary,
+            "provider_health_visible": provider_health_visible,
+            "compliance": _compliance_summary(request, user),
+            "as_of": timezone.now().isoformat(),
         }
-
-        if provider_health is not None:
-            capabilities_data["provider_health"] = provider_health
-
-        etag = _etag(capabilities_data)
-
-        if request.headers.get("If-None-Match") == etag:
-            return Response(status=304)
-
-        response = Response({
-            **capabilities_data,
-            "as_of": django_timezone.now().isoformat(),
-        })
-        response["ETag"] = etag
-        response["Cache-Control"] = "private, no-store"
-        response["Pragma"] = "no-cache"
-        return response
+        if provider_health_visible:
+            payload["provider_health"] = {
+                "system_state": system_state,
+                "services": HealthAuthority.latest(),
+            }
+        return _cached_response(payload, request)
