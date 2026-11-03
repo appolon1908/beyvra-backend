@@ -133,7 +133,6 @@ class DashboardScanRegressionTests(unittest.TestCase):
             )
             self._scan(root)
 
-<<<<<<< HEAD
     def test_nested_dashboard_in_either_root_is_scanned(self):
         for directory_name in ("monitoring/grafana", "observability/grafana"):
             with self.subTest(directory=directory_name), TemporaryDirectory() as temporary:
@@ -160,7 +159,7 @@ class DashboardScanRegressionTests(unittest.TestCase):
                     encoding="utf-8",
                 )
             self._scan(root)
-=======
+
     def test_duplicate_json_key_cannot_hide_escaped_secret_value(self):
         with TemporaryDirectory() as temporary:
             root = pathlib.Path(temporary)
@@ -171,6 +170,5 @@ class DashboardScanRegressionTests(unittest.TestCase):
             )
             with self.assertRaisesRegex(ValueError, "duplicate dashboard key"):
                 self._scan(root)
->>>>>>> repair/pr128
 
 if __name__=="__main__": unittest.main()
