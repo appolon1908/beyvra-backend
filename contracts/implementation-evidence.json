@@ -13,7 +13,7 @@
       "implementation_status": "IMPLEMENTED",
       "file_sha256": {
         "FX/apps/workspace/api.py": {
-          "sha256": "f4630b40c413eea96b38b8b43dbd4788fdc0684f9bbd5ebe08ca582f46d10ca4"
+          "sha256": "c2598167deba784c6357048289d712246edae51971efb243997a63b5dfb5fce4"
         },
         "FX/apps/workspace/commands.py": {
           "sha256": "4cda1fca65fb142b7d1d3cf7c7be0444c8d5c9c25e5275d1a7dd684c66dd4ec9"
@@ -22,7 +22,7 @@
           "sha256": "d4018b08162d9e493b7a1b931ede0a46873d3625d5d6931c9e9f7d46d44745f8"
         },
         "FX/apps/workspace/serializers.py": {
-          "sha256": "de3d1086d33a339e1d77c593a1eaf5f106c793fbf91c7d7534cc1be3f992f6a2"
+          "sha256": "eeacd6d9751f6f50eebc2dfc40299572d15574f48f1faf24f19bd12aaedea6bf"
         },
         "FX/apps/workspace/instruments.py": {
           "sha256": "507fcbe53659ec708f503c9ac4171d5c050114b3cd685edb9b0353270c47535c"
@@ -46,7 +46,7 @@
           "sha256": "57950ccde1b83bdcf68d00a10631dbd37e51c4caf9639a0e8f85e943f5b3cd9e"
         }
       },
-      "verification": "PostgreSQL apps.workspace.tests included in 116 passing regressions on 2026-09-12; final CI must revalidate this head"
+      "verification": "Source bindings refreshed for the repaired revision; source and unit checks do not establish PostgreSQL concurrency, provider integration, or production acceptance."
     },
     "createWatchlist": {
       "method": "POST",
@@ -60,7 +60,7 @@
       "implementation_status": "IMPLEMENTED",
       "file_sha256": {
         "FX/apps/workspace/api.py": {
-          "sha256": "f4630b40c413eea96b38b8b43dbd4788fdc0684f9bbd5ebe08ca582f46d10ca4"
+          "sha256": "c2598167deba784c6357048289d712246edae51971efb243997a63b5dfb5fce4"
         },
         "FX/apps/workspace/commands.py": {
           "sha256": "4cda1fca65fb142b7d1d3cf7c7be0444c8d5c9c25e5275d1a7dd684c66dd4ec9"
@@ -69,7 +69,7 @@
           "sha256": "d4018b08162d9e493b7a1b931ede0a46873d3625d5d6931c9e9f7d46d44745f8"
         },
         "FX/apps/workspace/serializers.py": {
-          "sha256": "de3d1086d33a339e1d77c593a1eaf5f106c793fbf91c7d7534cc1be3f992f6a2"
+          "sha256": "eeacd6d9751f6f50eebc2dfc40299572d15574f48f1faf24f19bd12aaedea6bf"
         },
         "FX/apps/workspace/instruments.py": {
           "sha256": "507fcbe53659ec708f503c9ac4171d5c050114b3cd685edb9b0353270c47535c"
@@ -93,7 +93,7 @@
           "sha256": "57950ccde1b83bdcf68d00a10631dbd37e51c4caf9639a0e8f85e943f5b3cd9e"
         }
       },
-      "verification": "PostgreSQL apps.workspace.tests included in 116 passing regressions on 2026-09-12; final CI must revalidate this head"
+      "verification": "Source bindings refreshed for the repaired revision; source and unit checks do not establish PostgreSQL concurrency, provider integration, or production acceptance."
     },
     "getWatchlist": {
       "method": "GET",
@@ -107,7 +107,7 @@
       "implementation_status": "IMPLEMENTED",
       "file_sha256": {
         "FX/apps/workspace/api.py": {
-          "sha256": "f4630b40c413eea96b38b8b43dbd4788fdc0684f9bbd5ebe08ca582f46d10ca4"
+          "sha256": "c2598167deba784c6357048289d712246edae51971efb243997a63b5dfb5fce4"
         },
         "FX/apps/workspace/commands.py": {
           "sha256": "4cda1fca65fb142b7d1d3cf7c7be0444c8d5c9c25e5275d1a7dd684c66dd4ec9"
@@ -116,7 +116,7 @@
           "sha256": "d4018b08162d9e493b7a1b931ede0a46873d3625d5d6931c9e9f7d46d44745f8"
         },
         "FX/apps/workspace/serializers.py": {
-          "sha256": "de3d1086d33a339e1d77c593a1eaf5f106c793fbf91c7d7534cc1be3f992f6a2"
+          "sha256": "eeacd6d9751f6f50eebc2dfc40299572d15574f48f1faf24f19bd12aaedea6bf"
         },
         "FX/apps/workspace/instruments.py": {
           "sha256": "507fcbe53659ec708f503c9ac4171d5c050114b3cd685edb9b0353270c47535c"
@@ -140,7 +140,7 @@
           "sha256": "57950ccde1b83bdcf68d00a10631dbd37e51c4caf9639a0e8f85e943f5b3cd9e"
         }
       },
-      "verification": "PostgreSQL apps.workspace.tests included in 116 passing regressions on 2026-09-12; final CI must revalidate this head"
+      "verification": "Source bindings refreshed for the repaired revision; source and unit checks do not establish PostgreSQL concurrency, provider integration, or production acceptance."
     },
     "renameWatchlist": {
       "method": "PATCH",
@@ -154,7 +154,7 @@
       "implementation_status": "IMPLEMENTED",
       "file_sha256": {
         "FX/apps/workspace/api.py": {
-          "sha256": "f4630b40c413eea96b38b8b43dbd4788fdc0684f9bbd5ebe08ca582f46d10ca4"
+          "sha256": "c2598167deba784c6357048289d712246edae51971efb243997a63b5dfb5fce4"
         },
         "FX/apps/workspace/commands.py": {
           "sha256": "4cda1fca65fb142b7d1d3cf7c7be0444c8d5c9c25e5275d1a7dd684c66dd4ec9"
@@ -163,7 +163,7 @@
           "sha256": "d4018b08162d9e493b7a1b931ede0a46873d3625d5d6931c9e9f7d46d44745f8"
         },
         "FX/apps/workspace/serializers.py": {
-          "sha256": "de3d1086d33a339e1d77c593a1eaf5f106c793fbf91c7d7534cc1be3f992f6a2"
+          "sha256": "eeacd6d9751f6f50eebc2dfc40299572d15574f48f1faf24f19bd12aaedea6bf"
         },
         "FX/apps/workspace/instruments.py": {
           "sha256": "507fcbe53659ec708f503c9ac4171d5c050114b3cd685edb9b0353270c47535c"
@@ -187,7 +187,7 @@
           "sha256": "57950ccde1b83bdcf68d00a10631dbd37e51c4caf9639a0e8f85e943f5b3cd9e"
         }
       },
-      "verification": "PostgreSQL apps.workspace.tests included in 116 passing regressions on 2026-09-12; final CI must revalidate this head"
+      "verification": "Source bindings refreshed for the repaired revision; source and unit checks do not establish PostgreSQL concurrency, provider integration, or production acceptance."
     },
     "deleteWatchlist": {
       "method": "DELETE",
@@ -201,7 +201,7 @@
       "implementation_status": "IMPLEMENTED",
       "file_sha256": {
         "FX/apps/workspace/api.py": {
-          "sha256": "f4630b40c413eea96b38b8b43dbd4788fdc0684f9bbd5ebe08ca582f46d10ca4"
+          "sha256": "c2598167deba784c6357048289d712246edae51971efb243997a63b5dfb5fce4"
         },
         "FX/apps/workspace/commands.py": {
           "sha256": "4cda1fca65fb142b7d1d3cf7c7be0444c8d5c9c25e5275d1a7dd684c66dd4ec9"
@@ -210,7 +210,7 @@
           "sha256": "d4018b08162d9e493b7a1b931ede0a46873d3625d5d6931c9e9f7d46d44745f8"
         },
         "FX/apps/workspace/serializers.py": {
-          "sha256": "de3d1086d33a339e1d77c593a1eaf5f106c793fbf91c7d7534cc1be3f992f6a2"
+          "sha256": "eeacd6d9751f6f50eebc2dfc40299572d15574f48f1faf24f19bd12aaedea6bf"
         },
         "FX/apps/workspace/instruments.py": {
           "sha256": "507fcbe53659ec708f503c9ac4171d5c050114b3cd685edb9b0353270c47535c"
@@ -234,7 +234,7 @@
           "sha256": "57950ccde1b83bdcf68d00a10631dbd37e51c4caf9639a0e8f85e943f5b3cd9e"
         }
       },
-      "verification": "PostgreSQL apps.workspace.tests included in 116 passing regressions on 2026-09-12; final CI must revalidate this head"
+      "verification": "Source bindings refreshed for the repaired revision; source and unit checks do not establish PostgreSQL concurrency, provider integration, or production acceptance."
     },
     "listWatchlistItems": {
       "method": "GET",
@@ -248,7 +248,7 @@
       "implementation_status": "IMPLEMENTED",
       "file_sha256": {
         "FX/apps/workspace/api.py": {
-          "sha256": "f4630b40c413eea96b38b8b43dbd4788fdc0684f9bbd5ebe08ca582f46d10ca4"
+          "sha256": "c2598167deba784c6357048289d712246edae51971efb243997a63b5dfb5fce4"
         },
         "FX/apps/workspace/commands.py": {
           "sha256": "4cda1fca65fb142b7d1d3cf7c7be0444c8d5c9c25e5275d1a7dd684c66dd4ec9"
@@ -257,7 +257,7 @@
           "sha256": "d4018b08162d9e493b7a1b931ede0a46873d3625d5d6931c9e9f7d46d44745f8"
         },
         "FX/apps/workspace/serializers.py": {
-          "sha256": "de3d1086d33a339e1d77c593a1eaf5f106c793fbf91c7d7534cc1be3f992f6a2"
+          "sha256": "eeacd6d9751f6f50eebc2dfc40299572d15574f48f1faf24f19bd12aaedea6bf"
         },
         "FX/apps/workspace/instruments.py": {
           "sha256": "507fcbe53659ec708f503c9ac4171d5c050114b3cd685edb9b0353270c47535c"
@@ -281,7 +281,7 @@
           "sha256": "57950ccde1b83bdcf68d00a10631dbd37e51c4caf9639a0e8f85e943f5b3cd9e"
         }
       },
-      "verification": "PostgreSQL apps.workspace.tests included in 116 passing regressions on 2026-09-12; final CI must revalidate this head"
+      "verification": "Source bindings refreshed for the repaired revision; source and unit checks do not establish PostgreSQL concurrency, provider integration, or production acceptance."
     },
     "addWatchlistItem": {
       "method": "POST",
@@ -295,7 +295,7 @@
       "implementation_status": "IMPLEMENTED",
       "file_sha256": {
         "FX/apps/workspace/api.py": {
-          "sha256": "f4630b40c413eea96b38b8b43dbd4788fdc0684f9bbd5ebe08ca582f46d10ca4"
+          "sha256": "c2598167deba784c6357048289d712246edae51971efb243997a63b5dfb5fce4"
         },
         "FX/apps/workspace/commands.py": {
           "sha256": "4cda1fca65fb142b7d1d3cf7c7be0444c8d5c9c25e5275d1a7dd684c66dd4ec9"
@@ -304,7 +304,7 @@
           "sha256": "d4018b08162d9e493b7a1b931ede0a46873d3625d5d6931c9e9f7d46d44745f8"
         },
         "FX/apps/workspace/serializers.py": {
-          "sha256": "de3d1086d33a339e1d77c593a1eaf5f106c793fbf91c7d7534cc1be3f992f6a2"
+          "sha256": "eeacd6d9751f6f50eebc2dfc40299572d15574f48f1faf24f19bd12aaedea6bf"
         },
         "FX/apps/workspace/instruments.py": {
           "sha256": "507fcbe53659ec708f503c9ac4171d5c050114b3cd685edb9b0353270c47535c"
@@ -328,7 +328,7 @@
           "sha256": "57950ccde1b83bdcf68d00a10631dbd37e51c4caf9639a0e8f85e943f5b3cd9e"
         }
       },
-      "verification": "PostgreSQL apps.workspace.tests included in 116 passing regressions on 2026-09-12; final CI must revalidate this head"
+      "verification": "Source bindings refreshed for the repaired revision; source and unit checks do not establish PostgreSQL concurrency, provider integration, or production acceptance."
     },
     "deleteWatchlistItem": {
       "method": "DELETE",
@@ -342,7 +342,7 @@
       "implementation_status": "IMPLEMENTED",
       "file_sha256": {
         "FX/apps/workspace/api.py": {
-          "sha256": "f4630b40c413eea96b38b8b43dbd4788fdc0684f9bbd5ebe08ca582f46d10ca4"
+          "sha256": "c2598167deba784c6357048289d712246edae51971efb243997a63b5dfb5fce4"
         },
         "FX/apps/workspace/commands.py": {
           "sha256": "4cda1fca65fb142b7d1d3cf7c7be0444c8d5c9c25e5275d1a7dd684c66dd4ec9"
@@ -351,7 +351,7 @@
           "sha256": "d4018b08162d9e493b7a1b931ede0a46873d3625d5d6931c9e9f7d46d44745f8"
         },
         "FX/apps/workspace/serializers.py": {
-          "sha256": "de3d1086d33a339e1d77c593a1eaf5f106c793fbf91c7d7534cc1be3f992f6a2"
+          "sha256": "eeacd6d9751f6f50eebc2dfc40299572d15574f48f1faf24f19bd12aaedea6bf"
         },
         "FX/apps/workspace/instruments.py": {
           "sha256": "507fcbe53659ec708f503c9ac4171d5c050114b3cd685edb9b0353270c47535c"
@@ -375,7 +375,7 @@
           "sha256": "57950ccde1b83bdcf68d00a10631dbd37e51c4caf9639a0e8f85e943f5b3cd9e"
         }
       },
-      "verification": "PostgreSQL apps.workspace.tests included in 116 passing regressions on 2026-09-12; final CI must revalidate this head"
+      "verification": "Source bindings refreshed for the repaired revision; source and unit checks do not establish PostgreSQL concurrency, provider integration, or production acceptance."
     }
   }
 }
