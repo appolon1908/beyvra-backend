@@ -4,6 +4,16 @@ from unittest.mock import patch
 
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 
+
+def _dashboard_object(pairs):
+    """Reject ambiguous JSON objects before any values can be overwritten."""
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate dashboard key: {key}")
+        result[key] = value
+    return result
+
 class ObservabilityAssetTests(unittest.TestCase):
     def test_dashboards_are_valid_json_without_secrets(self):
         files = sorted(
@@ -15,7 +25,9 @@ class ObservabilityAssetTests(unittest.TestCase):
         self.assertGreaterEqual(len(files), 10)
         for path in files:
             with self.subTest(path=path.relative_to(ROOT)):
-                data = json.loads(path.read_text(encoding="utf-8"))
+                data = json.loads(
+                    path.read_text(encoding="utf-8"), object_pairs_hook=_dashboard_object
+                )
                 self.assertTrue(data["title"])
                 self.assertTrue(data["panels"])
                 # Scan decoded keys and values, including JSON unicode escapes.
@@ -121,6 +133,7 @@ class DashboardScanRegressionTests(unittest.TestCase):
             )
             self._scan(root)
 
+<<<<<<< HEAD
     def test_nested_dashboard_in_either_root_is_scanned(self):
         for directory_name in ("monitoring/grafana", "observability/grafana"):
             with self.subTest(directory=directory_name), TemporaryDirectory() as temporary:
@@ -147,5 +160,17 @@ class DashboardScanRegressionTests(unittest.TestCase):
                     encoding="utf-8",
                 )
             self._scan(root)
+=======
+    def test_duplicate_json_key_cannot_hide_escaped_secret_value(self):
+        with TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            directory = self._write_valid_dashboards(root)
+            (directory / "beyvra-duplicate.json").write_text(
+                r'{"title": "operator", "panels": [{"expr": "api\u005fkey=fixture", "expr": "safe"}]}',
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "duplicate dashboard key"):
+                self._scan(root)
+>>>>>>> repair/pr128
 
 if __name__=="__main__": unittest.main()
