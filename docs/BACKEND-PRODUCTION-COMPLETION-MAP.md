@@ -20,8 +20,8 @@ Listed migrations are source files, not proof that a database has applied them.
 The original map's proposed `PlatformConfig`, `TenantEntitlement`, `FinancialLedger`,
 `FinancialReservation`, `WebhookInbox`, and `WebhookDeadLetter` authorities are not
 established by this source inventory. Do not create duplicate authorities to match
-those names. In particular, this PR does not implement the later canonical order,
-account, market snapshot, realtime ticket/resume, or provider webhook milestones.
+those names. This inventory does not certify canonical order, account, market
+snapshot, realtime ticket/resume, or provider webhook production readiness.
 
 ## Platform API boundary
 
