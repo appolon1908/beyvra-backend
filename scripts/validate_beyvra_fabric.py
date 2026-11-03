@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -220,8 +221,27 @@ def validate_n8n_manifest(fabric: dict[str, Any]) -> dict[str, Any]:
 
 def validate_branch_map() -> None:
     branch_map = load_text(BRANCH_MAP_PATH)
-    for line in EXPECTED_BRANCH_REFS:
-        require(line in branch_map, f"branch map is missing: {line}")
+    # Examples and comments are not authoritative declarations. Unclosed
+    # comments/fences remain excluded rather than supplying a fallback pin.
+    text = re.sub(r"<!--.*?(?:-->|$)", "", branch_map, flags=re.DOTALL)
+    active_lines = []
+    fence = None
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        marker = re.match(r"(`{3,}|~{3,})", line)
+        if fence is not None:
+            if re.fullmatch(re.escape(fence[0]) + r"{" + str(fence[1]) + r",}", line):
+                fence = None
+            continue
+        if marker:
+            fence = (marker.group()[0], len(marker.group()))
+            continue
+        active_lines.append(line)
+    for expected in EXPECTED_BRANCH_REFS:
+        label = expected.split(":", 1)[0] + ":"
+        declarations = [line for line in active_lines if line.startswith(label)]
+        require(declarations == [expected],
+                f"branch map must contain one active exact declaration: {label}")
 
 
 def security_scope(operation: dict[str, Any]) -> list[dict[str, list[str]]]:
