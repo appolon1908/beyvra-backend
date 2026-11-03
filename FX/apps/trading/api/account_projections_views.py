@@ -46,8 +46,8 @@ class AccountBalancesProjectionView(APIView):
 
         total_cash = account.total_balance
         available_cash, reserved_cash = _available_and_reserved_cash(account)
-        settled_cash = total_cash - reserved_cash
-        unsettled_cash = Decimal("0.00")
+        settled_cash = total_cash - account.pending_balance
+        unsettled_cash = account.pending_balance
 
         return Response({
             "account_id": str(account.id),
