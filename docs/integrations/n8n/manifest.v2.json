@@ -1,7 +1,7 @@
 {
   "schema_version": "2.0",
   "status": "SOURCE_ONLY",
-  "repository": "appolon1908-hue/beyvra-backend",
+  "repository": "appolon1908/beyvra-backend",
   "product": "beyvra",
   "role": "financial_domain_and_backend_authority",
   "workflow_family": "product.beyvra-nonfinancial",
