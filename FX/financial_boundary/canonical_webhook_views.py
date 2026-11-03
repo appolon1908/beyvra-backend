@@ -3,10 +3,9 @@ from django.conf import settings
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from financial_boundary.eventing import EventReplayConflict
+from financial_boundary.eventing import EventContractError
 from financial_boundary.webhooks import (
     WebhookDenied,
-    consume_verified_webhook,
     verify_provider_webhook,
 )
 
@@ -20,7 +19,13 @@ class CanonicalProviderWebhookView(APIView):
 
     def post(self, request, provider):
         # 1. Allowlist verification
-        allowed_providers = {"alpaca", "drivewealth", "polygon", "coinbase", "simulated"}
+        allowed_providers = {
+            "alpaca",
+            "drivewealth",
+            "polygon",
+            "coinbase",
+            "simulated",
+        }
         if provider not in allowed_providers:
             return Response({"error": {"code": "PROVIDER_DISALLOWED"}}, status=403)
 
@@ -45,23 +50,29 @@ class CanonicalProviderWebhookView(APIView):
         }
 
         try:
-            verified = verify_provider_webhook(
+            verify_provider_webhook(
                 expected_provider_id=provider,
                 tenant_ref=DEFAULT_WEBHOOK_TENANT,
                 headers=headers,
                 raw_body=request.body,
                 secret=secret,
-                replay_window_seconds=300
+                replay_window_seconds=300,
             )
-        except WebhookDenied as exc:
-            return Response({"error": {"code": "INVALID_WEBHOOK", "message": str(exc)}}, status=401)
+        except (WebhookDenied, EventContractError, OverflowError, OSError):
+            return Response(
+                {
+                    "error": {
+                        "code": "INVALID_WEBHOOK",
+                        "message": "Webhook verification failed.",
+                    }
+                },
+                status=401,
+            )
 
-        try:
-            first_seen = consume_verified_webhook(verified, lambda envelope: None)
-        except EventReplayConflict:
-            return Response({"error": {"code": "EVENT_REPLAY_CONFLICT"}}, status=409)
-
-        if not first_seen:
-            return Response({"status": "duplicate"}, status=200)
-
-        return Response({"status": "accepted", "event_id": str(verified.envelope.event_id)}, status=202)
+        # No canonical execution handler/inbox is bound to this route yet.
+        # Acknowledge nothing and write no deduplication marker: a provider
+        # must be able to retry once durable domain processing is configured.
+        return Response(
+            {"error": {"code": "WEBHOOK_PROCESSING_UNAVAILABLE", "retryable": True}},
+            status=503,
+        )
