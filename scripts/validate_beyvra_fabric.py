@@ -227,6 +227,9 @@ def validate_branch_map() -> None:
     active_lines = []
     fence = None
     for raw_line in text.splitlines():
+        expanded = raw_line.expandtabs(4)
+        if fence is None and len(expanded) - len(expanded.lstrip(" ")) >= 4:
+            continue
         line = raw_line.strip()
         marker = re.match(r"(`{3,}|~{3,})", line)
         if fence is not None:

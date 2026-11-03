@@ -24,6 +24,12 @@ class BranchMapContractTests(unittest.TestCase):
             with self.subTest(template=template), self.assertRaises(SystemExit):
                 self.validate(template.format(text))
 
+    def test_indented_code_declarations_do_not_count(self):
+        text = validator.BRANCH_MAP_PATH.read_text()
+        for indent in ("    ", "\t"):
+            with self.subTest(indent=indent), self.assertRaises(SystemExit):
+                self.validate("\n".join(indent + line for line in text.splitlines()))
+
     def test_missing_modified_or_duplicate_declaration_is_rejected(self):
         text = validator.BRANCH_MAP_PATH.read_text()
         for line in validator.EXPECTED_BRANCH_REFS:
