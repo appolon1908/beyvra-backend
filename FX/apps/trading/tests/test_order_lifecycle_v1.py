@@ -2,8 +2,9 @@ import uuid
 from decimal import Decimal
 from django.test import TestCase, override_settings
 from rest_framework.test import APIClient
-from apps.trading.models import TradingOrder, SimulatedTrade
+from apps.trading.models import TradingOrder, SimulatedTrade, SimulatedReservation
 from apps.trading.domain.orders import OrderState
+from apps.trading.application.simulation import process_created_order
 from apps.foundation.models import OutboxEvent
 from users.models import User
 from apps.compliance.domain import AccountState, AmlState, JurisdictionState, KycState, SanctionsState
@@ -62,7 +63,9 @@ class OrderLifecycleV1ApiTests(TestCase):
         self.assertEqual(res_create.status_code, 201)
         order_data = res_create.json()
         order_id = order_data["order_id"]
-        self.assertEqual(order_data["status"], OrderState.ACCEPTED.value)
+        # Submission and provider acknowledgement are separate lifecycle events.
+        self.assertEqual(order_data["status"], OrderState.PENDING.value)
+        process_created_order(order_id, scenario="OPEN_THEN_CANCEL")
 
         # Get Order
         res_get = self.client.get(f"/api/v1/orders/{order_id}", **self.headers)
@@ -75,7 +78,7 @@ class OrderLifecycleV1ApiTests(TestCase):
         self.assertGreaterEqual(len(res_events.json()["results"]), 1)
 
     def test_order_cancel_lifecycle(self):
-        payload = {"instrument": "BTC-USD", "side": "BUY", "order_type": "LIMIT", "quantity": "2", "limit_price": "90.00"}
+        payload = {"instrument": "BTC-USD", "side": "BUY", "order_type": "LIMIT", "quantity": "2", "limit_price": "99.00"}
         res_create = self.client.post(
             "/api/v1/orders",
             payload,
@@ -83,8 +86,15 @@ class OrderLifecycleV1ApiTests(TestCase):
             HTTP_IDEMPOTENCY_KEY=str(uuid.uuid4()),
             **self.headers
         )
+        self.assertEqual(res_create.status_code, 201, res_create.json())
         order_data = res_create.json()
         order_id = order_data["order_id"]
+        self.assertEqual(order_data["status"], OrderState.PENDING.value)
+        process_created_order(order_id, scenario="OPEN_THEN_CANCEL")
+        current = self.client.get(f"/api/v1/orders/{order_id}", **self.headers)
+        self.assertEqual(current.status_code, 200)
+        order_data = current.json()
+        self.assertEqual(order_data["status"], OrderState.OPEN.value)
 
         res_cancel = self.client.post(
             f"/api/v1/orders/{order_id}/cancel",
@@ -93,7 +103,12 @@ class OrderLifecycleV1ApiTests(TestCase):
             **self.headers
         )
         self.assertEqual(res_cancel.status_code, 200)
-        self.assertEqual(res_cancel.json()["status"], OrderState.CANCELLED.value)
+        self.assertEqual(res_cancel.json()["status"], OrderState.CANCELED.value)
+        order = TradingOrder.objects.get(pk=order_id)
+        self.assertEqual(order.state, OrderState.CANCELLED.value)
+        reservation = SimulatedReservation.objects.get(pk=order.reservation_id)
+        self.assertEqual(reservation.state, SimulatedReservation.State.RELEASED)
+        self.assertEqual(reservation.remaining_amount, Decimal("0"))
 
     def test_executions_endpoint(self):
         res_exec = self.client.get("/api/v1/executions", **self.headers)
