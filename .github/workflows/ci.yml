@@ -369,3 +369,22 @@ jobs:
           severity: CRITICAL,HIGH
           ignore-unfixed: true
           exit-code: "1"
+
+  source-validation:
+    name: codestra/source-validation
+    needs: [secrets, container, validate]
+    if: ${{ always() }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Require every application source gate to succeed
+        env:
+          RESULT_0: ${{ needs.secrets.result }}
+          RESULT_1: ${{ needs.container.result }}
+          RESULT_2: ${{ needs.validate.result }}
+        run: |
+          set -eu
+          test "$RESULT_0" = success
+          test "$RESULT_1" = success
+          test "$RESULT_2" = success
